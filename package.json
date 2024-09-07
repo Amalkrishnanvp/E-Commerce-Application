@@ -1,0 +1,22 @@
+{
+  "name": "e-commerce-application",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "build": "npx tailwindcss -i ./src/input.css -o ./public/stylesheets/style.css --watch",
+    "start": "npx nodemon --ext js,hbs,json app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "express": "^4.19.2",
+    "hbs": "^4.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4",
+    "tailwindcss": "^3.4.10"
+  }
+}
