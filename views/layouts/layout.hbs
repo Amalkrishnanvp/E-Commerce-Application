@@ -25,7 +25,11 @@
 
 <body>
 
-  {{> defaultNavbar}}
+  {{#if admin}}
+  {{> adminHeader}}
+  {{else}}
+  {{> userHeader}}
+  {{/if}}
   {{{body}}}
 
   {{! Website scripts }}

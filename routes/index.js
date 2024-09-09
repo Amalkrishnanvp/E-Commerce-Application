@@ -29,6 +29,7 @@ router.get("/", (req, res, next) => {
   res.render("index", {
     title: "E-commerce application",
     products,
+    admin: true,
   });
 });
 
