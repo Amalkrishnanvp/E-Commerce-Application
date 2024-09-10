@@ -17,7 +17,8 @@ app.set("view options", { layout: "layouts/layout" });
 hbs.registerPartials(path.join(__dirname, "views/partials"));
 
 // Import routes
-const indexRouter = require("./routes/index");
+const userRouter = require("./routes/user");
+const adminRouter = require("./routes/admin");
 
 // Set view engine: handlebars
 app.set("view engine", "hbs");
@@ -29,7 +30,8 @@ app.use(express.static("public"));
 app.use(express.json());
 
 // Use routes
-app.use("/", indexRouter);
+app.use("/", userRouter);
+app.use("/admin", adminRouter);
 
 // Start server
 app.listen(port, () => {
