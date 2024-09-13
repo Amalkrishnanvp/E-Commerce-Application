@@ -1,4 +1,4 @@
-<section>
+{{!-- <section>
     <div class="contatiner py-10 px-14">
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -18,7 +18,7 @@
                             Image
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            <span class="sr-only">Edit</span>
+                            Action
                         </th>
                     </tr>
                 </thead>
@@ -38,11 +38,77 @@
                         <td class="px-6 py-4">
                             <img style="width: 30px; height: 30px;" src={{this.image}} alt="Image Not Available">
                         </td>
-                        <td class="px-6 py-4 text-right">
+                        <td class="px-6 py-4">
                             <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                         </td>
                     </tr>
                     {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section> --}}
+
+<section>
+    <div class="container py-10 px-14">
+
+        <div class="row flex justify-between pb-3">
+            <h2 class="font-medium text-2xl">Products List</h2>
+            <a href="/admin/add-product"> <button type="button"
+                    class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Add
+                    Product</button></a>
+        </div>
+
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            No
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Product name
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Category
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Price
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Image
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each products}}
+                    <tr
+                        class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                        <td class="px-6 py-4">
+                            1
+                        </td>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{this.name}}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{this.category}}
+                        </td>
+                        <td class="px-6 py-4">
+                            ${{this.price}}
+                        </td>
+                        <td class="px-6 py-4">
+                            <img style="width: 30px; height: 30px;" src={{this.image}} alt="Image Not Available">
+                        </td>
+                        <td class="px-6 py-4">
+                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        </td>
+                    </tr>
+                    {{/each}}
+
                 </tbody>
             </table>
         </div>

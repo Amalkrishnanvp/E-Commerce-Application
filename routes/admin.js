@@ -33,4 +33,9 @@ router.get("/", (req, res, next) => {
   res.render("admin/view-products", { admin: true, products });
 });
 
+/* GET add products page */
+router.get("/add-product", (req, res, next) => {
+  res.send("add products page");
+});
+
 module.exports = router;
