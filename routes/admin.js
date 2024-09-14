@@ -33,9 +33,15 @@ router.get("/", (req, res, next) => {
   res.render("admin/view-products", { admin: true, products });
 });
 
-/* GET add products page */
+/* GET add product page */
 router.get("/add-product", (req, res, next) => {
-  res.send("add products page");
+  res.render("admin/add-product", { admin: true });
+});
+
+/* POST add product details */
+router.post("/add-product", (req, res, next) => {
+  console.log(req.body);
+  console.log(req.files.Image);
 });
 
 module.exports = router;

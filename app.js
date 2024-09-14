@@ -3,6 +3,7 @@ const path = require("path");
 const app = express();
 const port = 5000;
 const hbs = require("hbs");
+const fileUpload = require("express-fileupload");
 
 // Set view engine to hbs
 app.set("view engine", "hbs");
@@ -28,6 +29,9 @@ app.use(express.static("public"));
 
 // Parse json bodies
 app.use(express.json());
+
+// Use file upload
+app.use(fileUpload());
 
 // Use routes
 app.use("/", userRouter);
