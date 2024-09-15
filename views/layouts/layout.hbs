@@ -27,10 +27,15 @@
 
   {{#if admin}}
   {{> adminHeader}}
+  {{{body}}}
+  {{> adminFooter}}
   {{else}}
   {{> userHeader}}
-  {{/if}}
   {{{body}}}
+  {{> userFooter}}
+  {{/if}}
+
+
 
   {{! Website scripts }}
   <script src="/javascripts/main.js"></script>
