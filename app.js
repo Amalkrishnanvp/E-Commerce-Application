@@ -4,6 +4,7 @@ const app = express();
 const port = 5000;
 const hbs = require("hbs");
 const fileUpload = require("express-fileupload");
+const { connectToDb, getDb } = require("./config/connection");
 
 // Set view engine to hbs
 app.set("view engine", "hbs");
@@ -21,9 +22,6 @@ hbs.registerPartials(path.join(__dirname, "views/partials"));
 const userRouter = require("./routes/user");
 const adminRouter = require("./routes/admin");
 
-// Set view engine: handlebars
-app.set("view engine", "hbs");
-
 // Serve static files from 'public' folder
 app.use(express.static("public"));
 
@@ -32,6 +30,9 @@ app.use(express.json());
 
 // Use file upload
 app.use(fileUpload());
+
+// Connect to db
+connectToDb();
 
 // Use routes
 app.use("/", userRouter);

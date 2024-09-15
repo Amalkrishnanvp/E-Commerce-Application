@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const productHelpers = require("../helpers/product-helpers");
 
 /* GET Admin page */
 router.get("/", (req, res, next) => {
@@ -39,9 +40,36 @@ router.get("/add-product", (req, res, next) => {
 });
 
 /* POST add product details */
-router.post("/add-product", (req, res, next) => {
-  console.log(req.body);
-  console.log(req.files.Image);
+router.post("/add-product", async (req, res, next) => {
+  try {
+    // Store product data
+    const productData = req.body;
+    console.log(productData);
+
+    // Store product image
+    const productImage = req.files.Image;
+    console.log(productImage);
+
+    // Wait for the product to be added and to get the inserted id
+    const data = await productHelpers.addProduct(productData);
+
+    // Extract the inserted id
+    const productId = data.insertedId;
+    console.log("Inserted product id: " + productId);
+
+    // Move product image to public folder
+    productImage.mv("./public/product-images/" + productId + ".jpg", (err) => {
+      if (!err) {
+        res.render("admin/add-product");
+      } else {
+        console.error(err);
+        res.status(500).send("Failed to upload image");
+      }
+    });
+  } catch (error) {
+    console.error(err);
+    res.status(500).send("Error adding product");
+  }
 });
 
 module.exports = router;
