@@ -6,13 +6,18 @@ const productHelpers = require("../helpers/product-helpers");
 router.get("/", async (req, res, next) => {
   // Call function to get all products
   const products = await productHelpers.getAllProducts();
-  console.log(products);
 
-  res.render("index", {
-    title: "E-commerce application",
-    products,
-    admin: false,
-  });
+  res.render("user/view-products", { products });
+});
+
+/* GET Login page */
+router.get("/login", (req, res, next) => {
+  res.render("user/login");
+});
+
+/* GET Sign up page */
+router.get("/signup", (req, res, next) => {
+  res.render("user/signup");
 });
 
 module.exports = router;

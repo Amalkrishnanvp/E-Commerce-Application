@@ -5,3 +5,6 @@
 * {
   font-family: "Poppins";
 }
+.hide {
+  display: none !important;
+}
