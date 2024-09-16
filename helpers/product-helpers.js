@@ -28,7 +28,7 @@ module.exports = {
   },
 
   // Function to add image path to database
-  addImagePth: async (productId, imagePath) => {
+  addImagePath: async (productId, imagePath) => {
     // Add image path
     await dbModule
       .getDb()

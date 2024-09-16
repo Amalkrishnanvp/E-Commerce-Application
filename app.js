@@ -6,6 +6,11 @@ const hbs = require("hbs");
 const fileUpload = require("express-fileupload");
 const { connectToDb } = require("./config/connection");
 
+// Register a helper to add 1 to the index
+hbs.registerHelper("addOne", (index) => {
+  return index + 1;
+});
+
 // Set view engine to hbs
 app.set("view engine", "hbs");
 

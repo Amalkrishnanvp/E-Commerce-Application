@@ -45,7 +45,7 @@ router.post("/add-product", async (req, res, next) => {
     const imagePath = path.join("product-images", productId + ".jpg");
 
     // Function to add image path
-    productHelpers.addImagePth(productId, imagePath);
+    productHelpers.addImagePath(productId, imagePath);
   } catch (err) {
     console.error(err);
     res.status(500).send("Error adding product");
