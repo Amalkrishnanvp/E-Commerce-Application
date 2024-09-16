@@ -4,7 +4,7 @@ const app = express();
 const port = 5000;
 const hbs = require("hbs");
 const fileUpload = require("express-fileupload");
-const { connectToDb, getDb } = require("./config/connection");
+const { connectToDb } = require("./config/connection");
 
 // Set view engine to hbs
 app.set("view engine", "hbs");

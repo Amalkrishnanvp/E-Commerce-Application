@@ -1,35 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const productHelpers = require("../helpers/product-helpers");
+const path = require("path");
 
 /* GET Admin page */
-router.get("/", (req, res, next) => {
-  let products = [
-    {
-      name: "Earthen Bottle",
-      category: "kitchen",
-      price: "45",
-      image: "/images/img1.jpg",
-    },
-    {
-      name: "Nomad Tumbler",
-      category: "kitchen",
-      price: "48",
-      image: "/images/img2.jpg",
-    },
-    {
-      name: "Paper Refill",
-      category: "kitchen",
-      price: "50",
-      image: "/images/img3.jpg",
-    },
-    {
-      name: "Mechanical Pencil",
-      category: "kitchen",
-      price: "22",
-      image: "/images/img4.jpg",
-    },
-  ];
+router.get("/", async (req, res, next) => {
+  // Call function to get all products
+  const products = await productHelpers.getAllProducts();
+  console.log(products);
 
   res.render("admin/view-products", { admin: true, products });
 });
@@ -50,13 +28,6 @@ router.post("/add-product", async (req, res, next) => {
     const productImage = req.files.Image;
     console.log(productImage);
 
-    // Wait for the product to be added and to get the inserted id
-    const data = await productHelpers.addProduct(productData);
-
-    // Extract the inserted id
-    const productId = data.insertedId;
-    console.log("Inserted product id: " + productId);
-
     // Move product image to public folder
     productImage.mv("./public/product-images/" + productId + ".jpg", (err) => {
       if (!err) {
@@ -66,6 +37,20 @@ router.post("/add-product", async (req, res, next) => {
         res.status(500).send("Failed to upload image");
       }
     });
+
+    // Making image path
+    const imagePath = path.join("product-images", productId + ".jpg");
+    console.log(imagePath);
+
+    // Add product image path to product data
+    productData.Image = imagePath;
+
+    // Wait for the product to be added and to get the inserted id
+    const data = await productHelpers.addProduct(productData);
+
+    // Extract the inserted id
+    const productId = data.insertedId;
+    console.log("Inserted product id: " + productId);
   } catch (error) {
     console.error(err);
     res.status(500).send("Error adding product");
