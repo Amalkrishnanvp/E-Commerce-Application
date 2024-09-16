@@ -26,4 +26,13 @@ module.exports = {
     // Return products
     return products;
   },
+
+  // Function to add image path to database
+  addImagePth: async (productId, imagePath) => {
+    // Add image path
+    await dbModule
+      .getDb()
+      .collection(essentials.PRODUCT_COLLECTION)
+      .updateOne({ _id: productId }, { $set: { ImagePath: imagePath } });
+  },
 };
