@@ -33,6 +33,9 @@ app.use(express.static("public"));
 // Parse json bodies
 app.use(express.json());
 
+// Middleware to Parse URL-encoded data
+app.use(express.urlencoded({ extended: true }));
+
 // Use file upload
 app.use(fileUpload());
 
