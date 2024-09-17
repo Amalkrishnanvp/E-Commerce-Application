@@ -18,9 +18,24 @@ router.get("/login", (req, res, next) => {
 
 /* POST - Handle login logic */
 router.post("/login", async (req, res) => {
-  const data = req.body;
+  try {
+    const data = req.body;
 
-  const result = await userHelpers.doLogin(data, res);
+    const result = await userHelpers.doLogin(data);
+
+    if (result.logged) {
+      if (result.role === "admin") {
+        res.redirect("/admin");
+      } else if (result.role === "user") {
+        res.redirect("/");
+      }
+    } else {
+      return res.status(400).send(result.message);
+    }
+  } catch (error) {
+    console.error("Error in login route: ", error);
+    return res.status(400).send("Internal server error");
+  }
 });
 
 /* GET - Render sign up page */
@@ -36,7 +51,7 @@ router.post("/signup", async (req, res, next) => {
   const result = await userHelpers.doSignup(data);
 
   if (result.message) {
-    res.status(201).send(result.message);
+    res.redirect("/");
   } else {
     res.status(400).send(result.message);
   }
