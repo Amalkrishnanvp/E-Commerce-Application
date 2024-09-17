@@ -16,6 +16,13 @@ router.get("/login", (req, res, next) => {
   res.render("user/login");
 });
 
+/* POST - Handle login logic */
+router.post("/login", async (req, res) => {
+  const data = req.body;
+
+  const result = await userHelpers.doLogin(data, res);
+});
+
 /* GET - Render sign up page */
 router.get("/signup", (req, res, next) => {
   res.render("user/signup");
