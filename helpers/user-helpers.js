@@ -67,28 +67,20 @@ module.exports = {
       if (user) {
         if (user.role === "admin") {
           if (user.password === password) {
-            // res.redirect("/admin/dashboard");
-            // res.send("Admin login success");
             return { logged: true, role: "admin" };
           } else {
-            // res.send("Incorrect password");
             return { logged: false, message: "Incorrect password" };
           }
         } else if (user.role === "user") {
           const match = await bcrypt.compare(password, user.password);
 
           if (!match) {
-            // return res.status(401).send("Incorrect password");
-            // res.send("Incorrect password");
             return { logged: false, message: "Incorrect password" };
           }
 
-          // res.redirect("/user/dashboard");
-          // res.send("user login success");
           return { logged: true, role: "user" };
         }
       } else {
-        // res.send("There is no user with provided username");
         return {
           logged: false,
           message: "There is no user with provided username",
@@ -96,7 +88,6 @@ module.exports = {
       }
     } catch (error) {
       console.error("Error logging in", error);
-      // return res.status(500).send("Error logging in");
       return { logged: false, message: "Error loggin in" };
     }
   },

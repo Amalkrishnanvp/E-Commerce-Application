@@ -28,9 +28,12 @@ router.post("/login", async (req, res) => {
         res.redirect("/admin");
       } else if (result.role === "user") {
         res.redirect("/");
+      } else {
+        res.redirect("/login");
       }
     } else {
-      return res.status(400).send(result.message);
+      // return res.status(400).send(result.message);
+      res.redirect("/login");
     }
   } catch (error) {
     console.error("Error in login route: ", error);
