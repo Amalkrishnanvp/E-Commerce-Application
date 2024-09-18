@@ -5,10 +5,13 @@ const userHelpers = require("../helpers/user-helpers");
 
 /* GET - Render home page */
 router.get("/", async (req, res, next) => {
+  // Access if session exists
+  let user = req.session.user;
+
   // Call function to get all products
   const products = await productHelpers.getAllProducts();
 
-  res.render("user/view-products", { products });
+  res.render("user/view-products", { products, user });
 });
 
 /* GET - Render login page */
@@ -25,8 +28,19 @@ router.post("/login", async (req, res) => {
 
     if (result.logged) {
       if (result.role === "admin") {
+        console.log(result.userData);
+        req.session.loggedIn = true;
+
+        req.session.user = result.userData;
+
         res.redirect("/admin");
       } else if (result.role === "user") {
+        console.log(result.userData);
+        req.session.loggedIn = true;
+
+        // Save user data to session
+        req.session.user = result.userData;
+
         res.redirect("/");
       } else {
         res.redirect("/login");
@@ -58,6 +72,13 @@ router.post("/signup", async (req, res, next) => {
   } else {
     res.status(400).send(result.message);
   }
+});
+
+/* GET - Log out page */
+router.get("/logout", (req, res, next) => {
+  // Destroy session when log out
+  req.session.destroy();
+  res.redirect("/");
 });
 
 module.exports = router;

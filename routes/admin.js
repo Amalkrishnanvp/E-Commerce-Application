@@ -5,10 +5,14 @@ const path = require("path");
 
 /* GET Admin page */
 router.get("/", async (req, res, next) => {
+  // Access if session exists
+  let user = req.session.user;
+  console.log(user);
+
   // Call function to get all products
   const products = await productHelpers.getAllProducts();
 
-  res.render("admin/view-products", { admin: true, products });
+  res.render("admin/view-products", { admin: true, products, user });
 });
 
 /* GET add product page */

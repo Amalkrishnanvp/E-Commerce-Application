@@ -5,6 +5,7 @@ const port = 5000;
 const hbs = require("hbs");
 const fileUpload = require("express-fileupload");
 const { connectToDb } = require("./config/connection");
+const session = require("express-session");
 
 // Register a helper to add 1 to the index
 hbs.registerHelper("addOne", (index) => {
@@ -38,6 +39,16 @@ app.use(express.urlencoded({ extended: true }));
 
 // Use file upload
 app.use(fileUpload());
+
+// Use session
+app.use(
+  session({
+    secret: "Key",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 60000 },
+  })
+);
 
 // Connect to db
 connectToDb();

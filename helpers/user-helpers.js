@@ -67,7 +67,7 @@ module.exports = {
       if (user) {
         if (user.role === "admin") {
           if (user.password === password) {
-            return { logged: true, role: "admin" };
+            return { logged: true, role: "admin", userData: user };
           } else {
             return { logged: false, message: "Incorrect password" };
           }
@@ -78,7 +78,7 @@ module.exports = {
             return { logged: false, message: "Incorrect password" };
           }
 
-          return { logged: true, role: "user" };
+          return { logged: true, role: "user", userData: user };
         }
       } else {
         return {
