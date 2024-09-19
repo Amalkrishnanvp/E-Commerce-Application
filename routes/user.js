@@ -31,6 +31,7 @@ router.post("/login", async (req, res) => {
         console.log(result.userData);
         req.session.loggedIn = true;
 
+        // Save user data to session
         req.session.user = result.userData;
 
         res.redirect("/admin");
