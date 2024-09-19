@@ -1324,6 +1324,11 @@ video {
   background-color: rgb(1 58 99 / var(--tw-bg-opacity));
 }
 
+.hover\:hover\:bg-custom-color-4:hover:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(1 58 99 / var(--tw-bg-opacity));
+}
+
 .hover\:font-semibold:hover {
   font-weight: 600;
 }
