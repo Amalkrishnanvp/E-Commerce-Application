@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // For show and hide passwords and icons based on user input in signup page
+
   const passwordEyeIcon = document.querySelector(".password-eye-icon");
   const showPassword = document.querySelector(".show-password");
   const passwordInput = document.querySelector("#password");

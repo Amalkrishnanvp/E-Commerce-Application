@@ -7,7 +7,6 @@ const path = require("path");
 router.get("/", async (req, res, next) => {
   // Access if session exists
   let user = req.session.user;
-  console.log(user);
 
   // Call function to get all products
   const products = await productHelpers.getAllProducts();

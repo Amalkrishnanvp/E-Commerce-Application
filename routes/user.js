@@ -28,7 +28,6 @@ router.post("/login", async (req, res) => {
 
     if (result.logged) {
       if (result.role === "admin") {
-        console.log(result.userData);
         req.session.loggedIn = true;
 
         // Save user data to session
@@ -36,7 +35,6 @@ router.post("/login", async (req, res) => {
 
         res.redirect("/admin");
       } else if (result.role === "user") {
-        console.log(result.userData);
         req.session.loggedIn = true;
 
         // Save user data to session

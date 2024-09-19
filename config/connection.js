@@ -1,9 +1,10 @@
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
+const essentials = require("./essentials");
 
 // Connection string
 const uri = process.env.MONGO_URI;
-const dbName = "shopping";
+const dbName = essentials.DATABASE;
 
 let db;
 

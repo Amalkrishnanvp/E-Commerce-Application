@@ -7,7 +7,6 @@ const saltRounds = 10;
 module.exports = {
   // Function for new user sign up
   doSignup: async (data) => {
-    console.log(data);
 
     // new user's data
     const { name, email, password } = data;
@@ -33,7 +32,6 @@ module.exports = {
         password: hashedPassword,
         role: "user",
       };
-      console.log(userData);
 
       await usersCollection.insertOne(userData);
 
