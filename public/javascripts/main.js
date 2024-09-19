@@ -5,12 +5,17 @@ document.addEventListener("DOMContentLoaded", () => {
     "#dropdownDefaultButton"
   );
   const dropdown = document.querySelector("#dropdown");
+  const userMenuButton = document.querySelector("#user-menu-button");
 
   mobileBtn.addEventListener("click", () => {
     mobileMenu.classList.toggle("hidden");
   });
 
   dropdownDefaultButton.addEventListener("click", () => {
+    dropdown.classList.toggle("hidden");
+  });
+
+  userMenuButton.addEventListener("click", () => {
     dropdown.classList.toggle("hidden");
   });
 });
