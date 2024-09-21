@@ -16,7 +16,12 @@ router.get("/", async (req, res, next) => {
 
 /* GET - Render login page */
 router.get("/login", (req, res, next) => {
-  res.render("user/login");
+  // render login page and products page based on logged in state
+  if (req.session.loggedIn) {
+    res.redirect("/");
+  } else {
+    res.render("user/login");
+  }
 });
 
 /* POST - Handle login logic */
