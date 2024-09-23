@@ -20,7 +20,8 @@ router.get("/login", (req, res, next) => {
   if (req.session.loggedIn) {
     res.redirect("/");
   } else {
-    res.render("user/login");
+    res.render("user/login", { loginErr: req.session.loginErr });
+    req.session.loginErr = false;
   }
 });
 
@@ -47,10 +48,11 @@ router.post("/login", async (req, res) => {
 
         res.redirect("/");
       } else {
+        req.session.loginErr = true;
         res.redirect("/login");
       }
     } else {
-      // return res.status(400).send(result.message);
+      req.session.loginErr = true;
       res.redirect("/login");
     }
   } catch (error) {
