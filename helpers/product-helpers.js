@@ -1,5 +1,6 @@
 const dbModule = require("../config/connection");
 const essentials = require("../config/essentials");
+const ObjectId = require("mongodb").ObjectId;
 
 module.exports = {
   // Function to add product
@@ -34,5 +35,18 @@ module.exports = {
       .getDb()
       .collection(essentials.PRODUCT_COLLECTION)
       .updateOne({ _id: productId }, { $set: { ImagePath: imagePath } });
+  },
+
+  // Function to delete products
+  deleteProduct: async (productId) => {
+    // remove product from database
+    const response = await dbModule
+      .getDb()
+      .collection(essentials.PRODUCT_COLLECTION)
+      .deleteOne({ _id: new ObjectId(productId) });
+
+    console.log(response);
+
+    return response;
   },
 };

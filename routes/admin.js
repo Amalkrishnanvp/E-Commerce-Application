@@ -55,4 +55,11 @@ router.post("/add-product", async (req, res, next) => {
   }
 });
 
+router.get("/delete-product/:id", async (req, res, next) => {
+  let productId = req.params.id;
+  const response = await productHelpers.deleteProduct(productId);
+
+  res.redirect("/admin");
+});
+
 module.exports = router;
