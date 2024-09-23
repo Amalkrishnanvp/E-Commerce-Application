@@ -3,6 +3,15 @@ const router = express.Router();
 const productHelpers = require("../helpers/product-helpers");
 const userHelpers = require("../helpers/user-helpers");
 
+// Function to verify login
+const verifyLogin = (req, res, next) => {
+  if (req.session.loggedIn) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
+};
+
 /* GET - Render home page */
 router.get("/", async (req, res, next) => {
   // Access if session exists
@@ -80,11 +89,16 @@ router.post("/signup", async (req, res, next) => {
   }
 });
 
-/* GET - Log out page */
+/* GET - Render Log out page */
 router.get("/logout", (req, res, next) => {
   // Destroy session when log out
   req.session.destroy();
   res.redirect("/");
+});
+
+/* GET - Render Cart page */
+router.get("/cart", verifyLogin, (req, res, next) => {
+  res.render("user/cart");
 });
 
 module.exports = router;
