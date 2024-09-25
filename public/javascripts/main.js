@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   const dropdown = document.querySelector("#dropdown");
   const userMenuButton = document.querySelector("#user-menu-button");
+  const deleteModal = document.querySelector("#deleteModal");
+  const deleteBtn = document.querySelector(".delete-btn");
 
   mobileBtn.addEventListener("click", () => {
     mobileMenu.classList.toggle("hidden");
@@ -18,4 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
   userMenuButton.addEventListener("click", () => {
     dropdown.classList.toggle("hidden");
   });
+
+  function doConfirm() {
+    alert("hi");
+  }
 });
