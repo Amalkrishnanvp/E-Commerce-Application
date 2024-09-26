@@ -55,11 +55,26 @@ router.post("/add-product", async (req, res, next) => {
   }
 });
 
+/* GET delete product */
 router.get("/delete-product/:id", async (req, res, next) => {
   let productId = req.params.id;
   const response = await productHelpers.deleteProduct(productId);
 
   res.redirect("/admin");
+});
+
+/* GET edit product */
+router.get("/edit-product/:id", async (req, res, next) => {
+  let product = await productHelpers.getProductDetails(req.params.id);
+  console.log(product);
+  res.render("admin/edit-product", { product });
+});
+
+/* POST delete product */
+router.post("/edit-product/:id", (req, res) => {
+  let productId = req.params.id;
+  console.log(productId);
+  productHelpers.updateProduct(req.params.id, req.body);
 });
 
 module.exports = router;

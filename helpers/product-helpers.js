@@ -45,7 +45,34 @@ module.exports = {
       .collection(essentials.PRODUCT_COLLECTION)
       .deleteOne({ _id: new ObjectId(productId) });
 
-    console.log(response);
+    return response;
+  },
+
+  // Function to get product details
+  getProductDetails: async (productId) => {
+    const response = await dbModule
+      .getDb()
+      .collection(essentials.PRODUCT_COLLECTION)
+      .findOne({ _id: new ObjectId(productId) });
+
+    return response;
+  },
+
+  // Function to update product
+  updateProduct: async (productId, productDetails) => {
+    const response = await dbModule
+      .getDb()
+      .collection(essentials.PRODUCT_COLLECTION)
+      .updateOne(
+        { _id: new ObjectId(productId) },
+        {
+          $set: {
+            Name: productDetails.Name,
+            Category: productDetails.Category,
+            Price: productDetails.Price,
+          },
+        }
+      );
 
     return response;
   },

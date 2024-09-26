@@ -20,8 +20,4 @@ document.addEventListener("DOMContentLoaded", () => {
   userMenuButton.addEventListener("click", () => {
     dropdown.classList.toggle("hidden");
   });
-
-  function doConfirm() {
-    alert("hi");
-  }
 });
