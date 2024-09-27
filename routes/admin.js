@@ -75,6 +75,7 @@ router.post("/edit-product/:id", (req, res) => {
   let productId = req.params.id;
   console.log(productId);
   productHelpers.updateProduct(req.params.id, req.body);
+  res.redirect("/admin");
 });
 
 module.exports = router;
