@@ -76,6 +76,12 @@ router.post("/edit-product/:id", (req, res) => {
   console.log(productId);
   productHelpers.updateProduct(req.params.id, req.body);
   res.redirect("/admin");
+
+  // Check if files exist and move to folder
+  if (req.files.Image) {
+    let productImage = req.files.Image;
+    productImage.mv("./public/product-images/" + productId + ".jpg");
+  }
 });
 
 module.exports = router;
