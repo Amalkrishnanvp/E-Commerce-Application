@@ -25,10 +25,10 @@
             </div>
             <div class="mb-4">
                 <label for="image" class="block mb-2 text-sm font-medium text-gray-900">Image</label>
-                <img src="/{{product.ImagePath}}" alt="" style="width: 100px; height: auto;">
+                <img src="/{{product.ImagePath}}" alt="" style="width: 100px; height: auto;" id="imageHolder" class="mb-3 rounded-sm">
                 <input type="file" id="image" name="Image"
-                    class="border border-gray-600 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder=""
-                    required />
+                    class="border border-gray-600 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                    placeholder="" required />
             </div>
             <button type="submit"
                 class="text-white bg-custom-color-1 hover:bg-custom-color-2 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">Submit</button>
@@ -37,3 +37,13 @@
     </div>
 
 </section>
+
+<script>
+    document.getElementById('image').addEventListener('change', function (event) {
+        const file = event.target.files[0]; // Get the selected file
+        if (file) {
+            const imageHolder = document.getElementById('imageHolder');
+            imageHolder.src = URL.createObjectURL(file); // Create object URL for the image
+        }
+    });
+</script>
