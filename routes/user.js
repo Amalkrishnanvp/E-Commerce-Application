@@ -81,8 +81,12 @@ router.post("/signup", async (req, res, next) => {
 
   // Pass user data to signup function
   const result = await userHelpers.doSignup(data);
+  console.log(result);
+  console.log(result.userData);
 
   if (result.message) {
+    req.session.loggedIn = true;
+    req.session.user = result.userData;
     res.redirect("/");
   } else {
     res.status(400).send(result.message);
@@ -99,6 +103,16 @@ router.get("/logout", (req, res, next) => {
 /* GET - Render Cart page */
 router.get("/cart", verifyLogin, (req, res, next) => {
   res.render("user/cart");
+});
+
+/* GET - Add product to cart */
+router.get("/add-to-cart/:id", verifyLogin, async (req, res, next) => {
+  const result = await userHelpers.addToCart(
+    req.param.id,
+    req.session.user._id
+  );
+
+  res.redirect("/");
 });
 
 module.exports = router;

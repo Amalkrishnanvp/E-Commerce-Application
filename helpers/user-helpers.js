@@ -1,13 +1,13 @@
+const { response } = require("express");
 const dbModule = require("../config/connection");
 const essentials = require("../config/essentials");
 const bcrypt = require("bcryptjs");
-
+const ObjectId = require("mongodb").ObjectId;
 const saltRounds = 10;
 
 module.exports = {
   // Function for new user sign up
   doSignup: async (data) => {
-
     // new user's data
     const { name, email, password } = data;
     const db = dbModule.getDb();
@@ -35,7 +35,11 @@ module.exports = {
 
       await usersCollection.insertOne(userData);
 
-      return { success: true, message: "User registered successfully" };
+      return {
+        success: true,
+        message: "User registered successfully",
+        userData,
+      };
     } catch (error) {
       console.error("Error during user registration: ", error);
       return { success: false, message: "Error registering user" };
@@ -88,5 +92,37 @@ module.exports = {
       console.error("Error logging in", error);
       return { logged: false, message: "Error loggin in" };
     }
+  },
+
+  // Function to add product to cart
+  addToCart: async (productId, userId) => {
+    let userCart = await dbModule
+      .getDb()
+      .collection(essentials.CART_COLLECTION)
+      .findOne({ user: new ObjectId(userId) });
+
+    if (userCart) {
+      const response = await dbModule
+        .getDb()
+        .collection(essentials.CART_COLLECTION)
+        .updateOne(
+          { user: new ObjectId(userId) },
+          {
+            $push: { products: new ObjectId(productId) },
+          }
+        );
+    } else {
+      let cartObj = {
+        user: new ObjectId(userId),
+        products: [new ObjectId(productId)],
+      };
+      // create cart for user
+      const response = await dbModule
+        .getDb()
+        .collection(essentials.CART_COLLECTION)
+        .insertOne(cartObj);
+    }
+
+    return response;
   },
 };
