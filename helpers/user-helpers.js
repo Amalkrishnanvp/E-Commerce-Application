@@ -125,4 +125,35 @@ module.exports = {
 
     return response;
   },
+
+  // Function to get cart products
+  getCartProducts: async (userId) => {
+    let cartItems = await dbModule
+      .getDb()
+      .collection(essentials.CART_COLLECTION)
+      .aggregate([
+        {
+          $match: { user: new ObjectId(userId) },
+        },
+        {
+          $lookup: {
+            from: essentials.PRODUCT_COLLECTION,
+            let: { productList: "$products" },
+            pipeline: [
+              {
+                $match: {
+                  $expn: {
+                    $in: ["$_id", "$$productList"],
+                  },
+                },
+              },
+            ],
+            as: "cartItems",
+          },
+        },
+      ])
+      .toArray();
+
+    return cartItems;
+  },
 };

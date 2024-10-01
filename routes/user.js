@@ -101,7 +101,10 @@ router.get("/logout", (req, res, next) => {
 });
 
 /* GET - Render Cart page */
-router.get("/cart", verifyLogin, (req, res, next) => {
+router.get("/cart", verifyLogin, async (req, res, next) => {
+  let products = await userHelpers.getCartProducts(req.session.user._id);
+  console.log("hello", products);
+
   res.render("user/cart");
 });
 
