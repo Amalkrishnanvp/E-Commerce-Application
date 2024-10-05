@@ -111,7 +111,7 @@ router.get("/cart", verifyLogin, async (req, res, next) => {
 /* GET - Add product to cart */
 router.get("/add-to-cart/:id", verifyLogin, async (req, res, next) => {
   const result = await userHelpers.addToCart(
-    req.param.id,
+    req.params.id,
     req.session.user._id
   );
 

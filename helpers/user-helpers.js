@@ -142,7 +142,7 @@ module.exports = {
             pipeline: [
               {
                 $match: {
-                  $expn: {
+                  $expr: {
                     $in: ["$_id", "$$productList"],
                   },
                 },
@@ -154,6 +154,6 @@ module.exports = {
       ])
       .toArray();
 
-    return cartItems;
+    return cartItems[0].cartItems;
   },
 };
