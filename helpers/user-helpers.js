@@ -156,4 +156,19 @@ module.exports = {
 
     return cartItems[0].cartItems;
   },
+
+  // function to get cart count
+  getCartCount: async (userId) => {
+    let count = 0;
+    let cart = await dbModule
+      .getDb()
+      .collection(essentials.CART_COLLECTION)
+      .findOne({ user: new ObjectId(userId) });
+
+    if (cart) {
+      count = cart.products.length;
+    }
+
+    return count;
+  },
 };

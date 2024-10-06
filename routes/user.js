@@ -16,11 +16,17 @@ const verifyLogin = (req, res, next) => {
 router.get("/", async (req, res, next) => {
   // Access if session exists
   let user = req.session.user;
+  let cartCount = null;
 
   // Call function to get all products
   const products = await productHelpers.getAllProducts();
 
-  res.render("user/view-products", { products, user });
+  if (user) {
+    let userId = req.session.user._id;
+    cartCount = await userHelpers.getCartCount(userId);
+  }
+
+  res.render("user/view-products", { products, user, cartCount });
 });
 
 /* GET - Render login page */
@@ -102,9 +108,18 @@ router.get("/logout", (req, res, next) => {
 
 /* GET - Render Cart page */
 router.get("/cart", verifyLogin, async (req, res, next) => {
-  let products = await userHelpers.getCartProducts(req.session.user._id);
+  // Access if session exists
+  let user = req.session.user;
+  let userId = req.session.user._id;
+  let cartCount = null;
 
-  res.render("user/cart", { products });
+  let products = await userHelpers.getCartProducts(userId);
+
+  if (user) {
+    cartCount = await userHelpers.getCartCount(userId);
+  }
+
+  res.render("user/cart", { products, user, cartCount });
 });
 
 /* GET - Add product to cart */
