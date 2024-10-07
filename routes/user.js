@@ -123,13 +123,15 @@ router.get("/cart", verifyLogin, async (req, res, next) => {
 });
 
 /* GET - Add product to cart */
-router.get("/add-to-cart/:id", verifyLogin, async (req, res, next) => {
+router.get("/add-to-cart/:id", async (req, res, next) => {
+  console.log("api call");
+
   const result = await userHelpers.addToCart(
     req.params.id,
     req.session.user._id
   );
 
-  res.redirect("/");
+  return res.json({ status: true });
 });
 
 module.exports = router;
