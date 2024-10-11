@@ -96,25 +96,38 @@ module.exports = {
 
   // Function to add product to cart
   addToCart: async (productId, userId) => {
+    let productObj = {
+      item: new ObjectId(productId),
+      quantity: 1,
+    };
+
     let userCart = await dbModule
       .getDb()
       .collection(essentials.CART_COLLECTION)
       .findOne({ user: new ObjectId(userId) });
 
     if (userCart) {
-      const response = await dbModule
-        .getDb()
-        .collection(essentials.CART_COLLECTION)
-        .updateOne(
-          { user: new ObjectId(userId) },
-          {
-            $push: { products: new ObjectId(productId) },
-          }
-        );
+      console.log(userCart.products);
+
+      let productExist = userCart.products.findIndex((product) => {
+        product.item == new ObjectId(productId);
+        console.log(product.item);
+      });
+      console.log(productExist);
+
+      // const response = await dbModule
+      //   .getDb()
+      //   .collection(essentials.CART_COLLECTION)
+      //   .updateOne(
+      //     { user: new ObjectId(userId) },
+      //     {
+      //       $push: { products: productObj },
+      //     }
+      //   );
     } else {
       let cartObj = {
         user: new ObjectId(userId),
-        products: [new ObjectId(productId)],
+        products: [productObj],
       };
       // create cart for user
       const response = await dbModule
