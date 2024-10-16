@@ -110,10 +110,21 @@ module.exports = {
       console.log(userCart.products);
 
       let productExist = userCart.products.findIndex((product) => {
-        product.item == new ObjectId(productId);
-        console.log(product.item);
+        return product.item.equals(new ObjectId(productId));
       });
       console.log(productExist);
+
+      if (productExist != -1) {
+        await dbModule
+          .getDb()
+          .collection(essentials.CART_COLLECTION)
+          .updateOne(
+            { "products.item": new ObjectId(productId) },
+            {
+              $inc: { "products.$.quantity": 1 },
+            }
+          );
+      }
 
       // const response = await dbModule
       //   .getDb()
