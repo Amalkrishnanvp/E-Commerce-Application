@@ -115,7 +115,7 @@ module.exports = {
       console.log(productExist);
 
       if (productExist != -1) {
-        await dbModule
+        const response = await dbModule
           .getDb()
           .collection(essentials.CART_COLLECTION)
           .updateOne(
@@ -124,17 +124,21 @@ module.exports = {
               $inc: { "products.$.quantity": 1 },
             }
           );
-      }
 
-      // const response = await dbModule
-      //   .getDb()
-      //   .collection(essentials.CART_COLLECTION)
-      //   .updateOne(
-      //     { user: new ObjectId(userId) },
-      //     {
-      //       $push: { products: productObj },
-      //     }
-      //   );
+        return response;
+      } else {
+        const response = await dbModule
+          .getDb()
+          .collection(essentials.CART_COLLECTION)
+          .updateOne(
+            { user: new ObjectId(userId) },
+            {
+              $push: { products: productObj },
+            }
+          );
+
+        return response;
+      }
     } else {
       let cartObj = {
         user: new ObjectId(userId),
@@ -160,23 +164,27 @@ module.exports = {
           $match: { user: new ObjectId(userId) },
         },
         {
-          $lookup: {
-            from: essentials.PRODUCT_COLLECTION,
-            let: { productList: "$products" },
-            pipeline: [
-              {
-                $match: {
-                  $expr: {
-                    $in: ["$_id", "$$productList"],
-                  },
-                },
-              },
-            ],
-            as: "cartItems",
-          },
-        },
+          $unwind: 'products'
+        }
+        // {
+        //   $lookup: {
+        //     from: essentials.PRODUCT_COLLECTION,
+        //     let: { productList: "$products" },
+        //     pipeline: [
+        //       {
+        //         $match: {
+        //           $expr: {
+        //             $in: ["$_id", "$$productList"],
+        //           },
+        //         },
+        //       },
+        //     ],
+        //     as: "cartItems",
+        //   },
+        // },
       ])
       .toArray();
+    console.log(cartItems[0].products);
 
     return cartItems[0].cartItems;
   },
