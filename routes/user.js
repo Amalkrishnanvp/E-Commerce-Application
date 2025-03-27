@@ -134,4 +134,9 @@ router.get("/add-to-cart/:id", async (req, res, next) => {
   return res.json({ status: true });
 });
 
+/* POST - Quantity increment */
+router.post("/change-product-quantity", async (req, res, next) => {
+  const result = await userHelpers.changeProductQuantity(req.body);
+});
+
 module.exports = router;

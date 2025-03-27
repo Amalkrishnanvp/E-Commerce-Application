@@ -2,6 +2,7 @@ const { response } = require("express");
 const dbModule = require("../config/connection");
 const essentials = require("../config/essentials");
 const bcrypt = require("bcryptjs");
+const { Collection } = require("mongodb");
 const ObjectId = require("mongodb").ObjectId;
 const saltRounds = 10;
 
@@ -119,7 +120,10 @@ module.exports = {
           .getDb()
           .collection(essentials.CART_COLLECTION)
           .updateOne(
-            { "products.item": new ObjectId(productId) },
+            {
+              user: new ObjectId(userId),
+              "products.item": new ObjectId(productId),
+            },
             {
               $inc: { "products.$.quantity": 1 },
             }
@@ -164,29 +168,33 @@ module.exports = {
           $match: { user: new ObjectId(userId) },
         },
         {
-          $unwind: 'products'
-        }
-        // {
-        //   $lookup: {
-        //     from: essentials.PRODUCT_COLLECTION,
-        //     let: { productList: "$products" },
-        //     pipeline: [
-        //       {
-        //         $match: {
-        //           $expr: {
-        //             $in: ["$_id", "$$productList"],
-        //           },
-        //         },
-        //       },
-        //     ],
-        //     as: "cartItems",
-        //   },
-        // },
+          $unwind: "$products",
+        },
+        {
+          $project: {
+            item: "$products.item",
+            quantity: "$products.quantity",
+          },
+        },
+        {
+          $lookup: {
+            from: essentials.PRODUCT_COLLECTION,
+            localField: "item",
+            foreignField: "_id",
+            as: "product",
+          },
+        },
+        {
+          $project: {
+            item: 1,
+            quantity: 1,
+            product: { $arrayElemAt: ["$product", 0] },
+          },
+        },
       ])
       .toArray();
-    console.log(cartItems[0].products);
 
-    return cartItems[0].cartItems;
+    return cartItems;
   },
 
   // function to get cart count
@@ -202,5 +210,28 @@ module.exports = {
     }
 
     return count;
+  },
+
+  // function to change product quantity
+  changeProductQuantity: async (details) => {
+    details.count = parseInt(details.count);
+    try {
+      const response = await dbModule
+        .getDb()
+        .collection(essentials.CART_COLLECTION)
+        .updateOne(
+          {
+            _id: new ObjectId(details.cartId),
+            "products.item": new ObjectId(details.productId),
+          },
+          {
+            $inc: { "products.$.quantity": details.count },
+          }
+        );
+      return { updated: true }; // Better response format
+    } catch (err) {
+      console.error("DB Error:", err);
+      return { updated: false };
+    }
   },
 };
