@@ -7,32 +7,35 @@
                 <div class="space-y-6">
 
                     {{#each products}}
-                    <div
+                    <div id="{{this.product._id}}"
                         class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
                         <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                           
+
                             <a href="#" class="w-20 shrink-0 md:order-1">
                                 <img class="h-20 w-20 dark:hidden"
                                     src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/iphone-light.svg"
                                     alt="imac image" />
-                                <img class="hidden h-20 w-20 dark:block" src="{{this.product.ImagePath}}" alt="imac image" />
+                                <img class="hidden h-20 w-20 dark:block" src="{{this.product.ImagePath}}"
+                                    alt="imac image" />
                             </a>
 
                             <label for="counter-input" class="sr-only">Choose quantity:</label>
 
                             <div class="flex items-center justify-between md:order-3 md:justify-end">
                                 <div class="flex items-center">
-                                    <button onclick="changeQuantity('{{this._id}}', '{{this.product._id}}', -1)" type="button" id="decrement-button-5"
+                                    <button
+                                        onclick="changeQuantity('{{this._id}}', '{{this.product._id}}', -1);"
+                                        type="button" id="decrement-button-5"
                                         data-input-counter-decrement="counter-input-5"
-                                        class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                                        class="decBtn inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
                                         <svg class="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true"
                                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                                 stroke-width="2" d="M1 1h16" />
                                         </svg>
                                     </button>
-                                    <div class="ml-1.5 mr-1.5 text-white">{{this.quantity}}</div>
-                                    <button onclick="changeQuantity('{{this._id}}', '{{this.product._id}}', 1)"
+                                    <div class="ml-1.5 mr-1.5 text-white quantity-element">{{this.quantity}}</div>
+                                    <button onclick="changeQuantity('{{this._id}}', '{{this.product._id}}', 1);"
                                         type="button" id="increment-button-5"
                                         data-input-counter-increment="counter-input-5"
                                         class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
@@ -45,7 +48,8 @@
                                 </div>
 
                                 <div class="text-end md:order-4 md:w-32">
-                                    <p class="text-base font-bold text-gray-900 dark:text-white">₹{{this.product.Price}}</p>
+                                    <p class="text-base font-bold text-gray-900 dark:text-white">₹{{this.product.Price}}
+                                    </p>
                                 </div>
                             </div>
 
@@ -78,7 +82,7 @@
                                     </button>
                                 </div>
                             </div>
-                        
+
                         </div>
                     </div>
                     {{/each}}
@@ -143,21 +147,5 @@
 </section>
 
 <script>
-    function changeQuantity(cartId, proId, count) {
-        $.ajax({
-            url: '/change-product-quantity',
-            data: {
-                cartId: cartId,       // Changed from 'cart'
-                productId: proId,      // Changed from 'product'
-                count: count
-            },
-            method: 'post',
-            success: (response) => {   // Fixed lowercase 'response'
-                alert(response.updated ? "Quantity updated!" : "Error updating");
-            },
-            error: (err) => {
-                console.error("Error:", err);
-            }
-        });
-    }
+
 </script>

@@ -2,7 +2,7 @@ const { response } = require("express");
 const dbModule = require("../config/connection");
 const essentials = require("../config/essentials");
 const bcrypt = require("bcryptjs");
-const { Collection } = require("mongodb");
+const { Collection, ReturnDocument } = require("mongodb");
 const ObjectId = require("mongodb").ObjectId;
 const saltRounds = 10;
 
@@ -228,7 +228,27 @@ module.exports = {
             $inc: { "products.$.quantity": details.count },
           }
         );
-      return { updated: true }; // Better response format
+
+      // Then fetch the updated cart to get the new quantity
+      const cart = await dbModule
+        .getDb()
+        .collection(essentials.CART_COLLECTION)
+        .findOne({
+          _id: new ObjectId(details.cartId),
+        });
+
+      if (cart) {
+        const product = cart.products.find(
+          (p) => p.item.toString() === details.productId
+        );
+        console.log(product);
+        return {
+          updated: true,
+          newQuantity: product.quantity,
+        };
+      } else {
+        return { updated: false };
+      }
     } catch (err) {
       console.error("DB Error:", err);
       return { updated: false };

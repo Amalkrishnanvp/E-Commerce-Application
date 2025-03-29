@@ -21,3 +21,4 @@ document.addEventListener("DOMContentLoaded", () => {
     dropdown.classList.toggle("hidden");
   });
 });
+
