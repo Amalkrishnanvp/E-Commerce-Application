@@ -140,4 +140,10 @@ router.post("/change-product-quantity", async (req, res, next) => {
   res.json(result);
 });
 
+/* POST - remove product */
+router.post("/remove-product", async (req, res, next) => {
+  const result = await userHelpers.removeProduct(req.body);
+  res.json(result);
+});
+
 module.exports = router;

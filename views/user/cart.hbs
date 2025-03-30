@@ -23,8 +23,7 @@
 
                             <div class="flex items-center justify-between md:order-3 md:justify-end">
                                 <div class="flex items-center">
-                                    <button
-                                        onclick="changeQuantity('{{this._id}}', '{{this.product._id}}', -1);"
+                                    <button onclick="changeQuantity('{{this._id}}', '{{this.product._id}}', -1);"
                                         type="button" id="decrement-button-5"
                                         data-input-counter-decrement="counter-input-5"
                                         class="decBtn inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
@@ -34,7 +33,8 @@
                                                 stroke-width="2" d="M1 1h16" />
                                         </svg>
                                     </button>
-                                    <div class="ml-1.5 mr-1.5 text-white quantity-element">{{this.quantity}}</div>
+                                    <div class="ml-1.5 mr-1.5 text-white quantity-element" id="{{this.product_id}}">
+                                        {{this.quantity}}</div>
                                     <button onclick="changeQuantity('{{this._id}}', '{{this.product._id}}', 1);"
                                         type="button" id="increment-button-5"
                                         data-input-counter-increment="counter-input-5"
@@ -71,6 +71,7 @@
                                     </button>
 
                                     <button type="button"
+                                        onclick="removeProd('{{this._id}}', '{{this.product._id}}');"
                                         class="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500">
                                         <svg class="me-1.5 h-5 w-5" aria-hidden="true"
                                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -145,7 +146,3 @@
         </div>
     </div>
 </section>
-
-<script>
-
-</script>

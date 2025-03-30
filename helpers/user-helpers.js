@@ -215,43 +215,88 @@ module.exports = {
   // function to change product quantity
   changeProductQuantity: async (details) => {
     details.count = parseInt(details.count);
+    details.quantity = parseInt(details.quantity);
+
     try {
-      const response = await dbModule
-        .getDb()
-        .collection(essentials.CART_COLLECTION)
-        .updateOne(
-          {
-            _id: new ObjectId(details.cartId),
-            "products.item": new ObjectId(details.productId),
-          },
-          {
-            $inc: { "products.$.quantity": details.count },
-          }
-        );
+      if (details.count == -1 && details.quantity == 1) {
+        const response = await dbModule
+          .getDb()
+          .collection(essentials.CART_COLLECTION)
+          .updateOne(
+            { _id: new ObjectId(details.cartId) },
+            {
+              $pull: { products: { item: new ObjectId(details.productId) } },
+            }
+          );
 
-      // Then fetch the updated cart to get the new quantity
-      const cart = await dbModule
-        .getDb()
-        .collection(essentials.CART_COLLECTION)
-        .findOne({
-          _id: new ObjectId(details.cartId),
-        });
-
-      if (cart) {
-        const product = cart.products.find(
-          (p) => p.item.toString() === details.productId
-        );
-        console.log(product);
-        return {
-          updated: true,
-          newQuantity: product.quantity,
-        };
+        return { removeProduct: true };
       } else {
-        return { updated: false };
+        const response = await dbModule
+          .getDb()
+          .collection(essentials.CART_COLLECTION)
+          .updateOne(
+            {
+              _id: new ObjectId(details.cartId),
+              "products.item": new ObjectId(details.productId),
+            },
+            {
+              $inc: { "products.$.quantity": details.count },
+            }
+          );
+
+        // Then fetch the updated cart to get the new quantity
+        const cart = await dbModule
+          .getDb()
+          .collection(essentials.CART_COLLECTION)
+          .findOne({
+            _id: new ObjectId(details.cartId),
+          });
+
+        if (cart) {
+          const product = cart.products.find(
+            (p) => p.item.toString() === details.productId
+          );
+          return {
+            updated: true,
+            newQuantity: product.quantity,
+          };
+        } else {
+          return { updated: false };
+        }
       }
     } catch (err) {
       console.error("DB Error:", err);
       return { updated: false };
+    }
+  },
+
+  // function to remove product
+  removeProduct: async (data) => {
+    const cartId = data.cartId;
+    const productId = data.productId;
+
+    const response = await dbModule
+      .getDb()
+      .collection(essentials.CART_COLLECTION)
+      .updateOne(
+        { _id: new ObjectId(cartId) },
+        {
+          $pull: { products: { item: new ObjectId(productId) } },
+        }
+      );
+
+    if (response.modifiedCount === 1) {
+      return {
+        success: true,
+        message: "Product removed successfully",
+        removedCount: 1,
+      };
+    } else {
+      return {
+        success: false,
+        message: "Product not found in cart",
+        removedCount: 0,
+      };
     }
   },
 };

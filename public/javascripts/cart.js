@@ -1,28 +1,36 @@
 function changeQuantity(cartId, proId, count) {
+  const quantity = document
+    .getElementById(proId)
+    .querySelector(".quantity-element").textContent;
+
   $.ajax({
     url: "/change-product-quantity",
     data: {
       cartId: cartId, // Changed from 'cart'
       productId: proId, // Changed from 'product'
       count: count,
+      quantity: quantity,
     },
     method: "post",
     success: (response) => {
       // Fixed lowercase 'response'
-      console.log(response);
-      if (response.updated) {
-        // Find the product container by ID
-        const productContainer = document.getElementById(proId);
+      if (response.removeProduct) {
+        // alert("Product removed from cart");
+        location.reload();
+      } else {
+        if (response.updated) {
+          // Find the product container by ID
+          const productContainer = document.getElementById(proId);
 
-        if (productContainer) {
-          // Find the quantity element within this container
-          const quantityElement =
-            productContainer.querySelector(".quantity-element");
+          if (productContainer) {
+            // Find the quantity element within this container
+            const quantityElement =
+              productContainer.querySelector(".quantity-element");
 
-          if (quantityElement) {
-            quantityElement.textContent = response.newQuantity;
+            if (quantityElement) {
+              quantityElement.textContent = response.newQuantity;
+            }
           }
-          btnState(proId);
         }
       }
     },
@@ -32,25 +40,26 @@ function changeQuantity(cartId, proId, count) {
   });
 }
 
-function btnState(productId) {
-  // Find the product container by ID
-  const productContainer = document.getElementById(productId);
+async function removeProd(cartId, productId) {
+  try {
+    const response = await fetch("/remove-product", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cartId,
+        productId,
+      }),
+    });
 
-  if (productContainer) {
-    // Find the quantity element within this container
-    const decBtn = productContainer.querySelector(".decBtn");
-    const quantityElement = productContainer.querySelector(".quantity-element");
+    const result = await response.json();
 
-    if (decBtn && quantityElement) {
-      const quantity = parseInt(quantityElement.textContent);
-
-      console.log(quantity);
-      // Toggle visibility based on quantity
-      if (quantity < 2) {
-        decBtn.classList.add("hidden");
-      } else {
-        decBtn.classList.remove("hidden");
-      }
+    if (result.success) {
+      alert("Product removed from cart");
+      location.reload();
     }
+  } catch (error) {
+    console.error("Error: ", error);
   }
 }
