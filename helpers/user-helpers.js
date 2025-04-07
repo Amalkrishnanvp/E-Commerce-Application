@@ -299,4 +299,48 @@ module.exports = {
       };
     }
   },
+  getTotalAmount: async (userId) => {
+    let total = await dbModule
+      .getDb()
+      .collection(essentials.CART_COLLECTION)
+      .aggregate([
+        {
+          $match: { user: new ObjectId(userId) },
+        },
+        {
+          $unwind: "$products",
+        },
+        {
+          $project: {
+            item: "$products.item",
+            quantity: "$products.quantity",
+          },
+        },
+        {
+          $lookup: {
+            from: essentials.PRODUCT_COLLECTION,
+            localField: "item",
+            foreignField: "_id",
+            as: "product",
+          },
+        },
+        {
+          $project: {
+            item: 1,
+            quantity: 1,
+            product: { $arrayElemAt: ["$product", 0] },
+            price: { $toDouble: { $arrayElemAt: ["$product.Price", 0] } },
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            total: { $sum: { $multiply: ["$quantity", "$price"] } },
+          },
+        },
+      ])
+      .toArray();
+    console.log(total[0].total);
+    return total[0].total;
+  },
 };

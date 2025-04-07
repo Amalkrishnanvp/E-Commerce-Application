@@ -146,4 +146,21 @@ router.post("/remove-product", async (req, res, next) => {
   res.json(result);
 });
 
+/* GET - Render Order page */
+router.get("/place-order", verifyLogin, async (req, res, next) => {
+  // Access if session exists
+  let user = req.session.user;
+  let userId = req.session.user._id;
+  let cartCount = null;
+
+  let products = await userHelpers.getCartProducts(userId);
+
+  if (user) {
+    cartCount = await userHelpers.getCartCount(userId);
+  }
+
+  let total = await userHelpers.getTotalAmount(userId);
+  res.render("user/order", { products, user, cartCount, total});
+});
+
 module.exports = router;
