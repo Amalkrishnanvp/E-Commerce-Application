@@ -152,7 +152,7 @@ router.post("/remove-product", async (req, res, next) => {
   res.json(result);
 });
 
-/* GET - Render Order page */
+/* GET - place order */
 router.get("/place-order", verifyLogin, async (req, res, next) => {
   // Access if session exists
   let user = req.session.user;
@@ -167,6 +167,24 @@ router.get("/place-order", verifyLogin, async (req, res, next) => {
 
   let total = await userHelpers.getTotalAmount(userId);
   res.render("user/order", { products, user, cartCount, total });
+});
+
+/* POST - place order */
+router.post("/place-order", verifyLogin, async (req, res, next) => {
+  let user = req.session.user;
+  let userId = req.session.user._id;
+
+  let products = await userHelpers.getCartProductList(userId);
+  let total = await userHelpers.getTotalAmount(userId);
+
+  const result = await userHelpers.placeOrder(
+    req.body,
+    products,
+    total,
+    userId
+  );
+
+  res.json({ status: true });
 });
 
 module.exports = router;

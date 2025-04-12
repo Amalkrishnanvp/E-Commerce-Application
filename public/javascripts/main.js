@@ -20,5 +20,21 @@ document.addEventListener("DOMContentLoaded", () => {
   userMenuButton.addEventListener("click", () => {
     dropdown.classList.toggle("hidden");
   });
-});
 
+  const checkoutForm = document.getElementById("checkout-form");
+
+  if (checkoutForm) {
+    checkoutForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      $.ajax({
+        url: "/place-order",
+        method: "post",
+        data: $("#checkout-form").serialize(),
+        success: (response) => {
+          console.log(response);
+        },
+      });
+    });
+  }
+});

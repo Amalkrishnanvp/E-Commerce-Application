@@ -299,6 +299,8 @@ module.exports = {
       };
     }
   },
+
+  // function to get total amount
   getTotalAmount: async (userId) => {
     let total = await dbModule
       .getDb()
@@ -340,7 +342,49 @@ module.exports = {
         },
       ])
       .toArray();
-    console.log(total[0].total);
     return total[0].total;
+  },
+
+  // function to place order
+  placeOrder: async (orderDetails, products, totalPrice, userId) => {
+    console.log(orderDetails, products, totalPrice);
+    let status =
+      orderDetails["payment-method"] === "COD" ? "placed" : "pending";
+
+    let orderObj = {
+      deliveryDetails: {
+        mobile: orderDetails.mobile,
+        address: orderDetails.address,
+        pincode: orderDetails.pincode,
+      },
+      userId: new ObjectId(orderDetails.userId),
+      paymentMethod: orderDetails["payment-method"],
+      products: products,
+      status: status,
+      totalAmount: totalPrice,
+    };
+
+    // create order object for placing order
+    const response = await dbModule
+      .getDb()
+      .collection(essentials.ORDER_COLLECTION)
+      .insertOne(orderObj);
+
+    const result = await dbModule
+      .getDb()
+      .collection(essentials.CART_COLLECTION)
+      .deleteOne({ user: new ObjectId(userId) });
+
+    return response;
+  },
+
+  // function to get cart products list
+  getCartProductList: async (userId) => {
+    let cart = await dbModule
+      .getDb()
+      .collection(essentials.CART_COLLECTION)
+      .findOne({ user: new ObjectId(userId) });
+
+    return cart.products;
   },
 };
