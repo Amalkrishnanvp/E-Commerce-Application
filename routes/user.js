@@ -119,7 +119,9 @@ router.get("/cart", verifyLogin, async (req, res, next) => {
     cartCount = await userHelpers.getCartCount(userId);
   }
 
-  res.render("user/cart", { products, user, cartCount });
+  let total = await userHelpers.getTotalAmount(userId);
+
+  res.render("user/cart", { products, user, cartCount, total });
 });
 
 /* GET - Add product to cart */
@@ -136,8 +138,12 @@ router.get("/add-to-cart/:id", async (req, res, next) => {
 
 /* POST - Quantity increment */
 router.post("/change-product-quantity", async (req, res, next) => {
+  let user = req.session.user;
+  let userId = req.session.user._id;
+
   const result = await userHelpers.changeProductQuantity(req.body);
-  res.json(result);
+  let total = await userHelpers.getTotalAmount(userId);
+  res.json({ result, total });
 });
 
 /* POST - remove product */
@@ -160,7 +166,7 @@ router.get("/place-order", verifyLogin, async (req, res, next) => {
   }
 
   let total = await userHelpers.getTotalAmount(userId);
-  res.render("user/order", { products, user, cartCount, total});
+  res.render("user/order", { products, user, cartCount, total });
 });
 
 module.exports = router;

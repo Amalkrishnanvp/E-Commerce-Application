@@ -14,13 +14,29 @@ function changeQuantity(cartId, proId, count) {
     method: "post",
     success: (response) => {
       // Fixed lowercase 'response'
-      if (response.removeProduct) {
+      if (response.result.removeProduct) {
         // alert("Product removed from cart");
         location.reload();
       } else {
-        if (response.updated) {
+        if (response.result.updated) {
           // Find the product container by ID
           const productContainer = document.getElementById(proId);
+          const totalContainer = document.querySelector(".total-container");
+
+          if (totalContainer) {
+            const totalShower = totalContainer.querySelector(".total-shower");
+            const secondTotalShower = totalContainer.querySelector(
+              ".second-total-shower"
+            );
+
+            if (totalShower) {
+              totalShower.textContent = response.total + " Rs.";
+            }
+
+            if (secondTotalShower) {
+              secondTotalShower.textContent = response.total + " Rs.";
+            }
+          }
 
           if (productContainer) {
             // Find the quantity element within this container
@@ -28,7 +44,7 @@ function changeQuantity(cartId, proId, count) {
               productContainer.querySelector(".quantity-element");
 
             if (quantityElement) {
-              quantityElement.textContent = response.newQuantity;
+              quantityElement.textContent = response.result.newQuantity;
             }
           }
         }
