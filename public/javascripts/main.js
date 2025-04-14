@@ -32,7 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "post",
         data: $("#checkout-form").serialize(),
         success: (response) => {
-          console.log(response);
+          if (response.status) {
+            location.href = `/order-success?order_id=${response.orderId}`;
+          }
         },
       });
     });

@@ -1,10 +1,11 @@
-<section class="bg-white py-8 antialiased md:py-12">
-    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <h2 class="text-xl font-semibold text-gray-900 sm:text-2xl">Shopping Cart</h2>
+<section class="bg-white py-8 antialiased">
+    <div class="mx-auto max-w-screen-xl px-4 md:px-6 lg:px-8">
+        <h2 class="text-xl font-semibold text-gray-900 sm:text-2xl pb-4">Shopping Cart</h2>
 
         <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
             <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
                 <div class="space-y-6">
+                    {{#if products.length}}
 
                     {{#each products}}
                     <div id="{{this.product._id}}"
@@ -86,9 +87,60 @@
                         </div>
                     </div>
                     {{/each}}
+                    {{else}}
+                    <!-- views/user/empty-cart.hbs -->
+                    <section class="bg-gray-50 min-h-64dcvx flex items-center justify-center px-4">
+                        <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md text-center">
+                            <!-- Empty Cart Icon -->
+                            <div
+                                class="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-blue-100 mb-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-600" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                            </div>
+
+                            <!-- Message -->
+                            <h2 class="text-2xl font-bold text-gray-800 mb-2">Your Cart is Empty</h2>
+                            <p class="text-gray-600 mb-6">Looks like you haven't added any items to your cart yet.</p>
+
+                            <!-- Continue Shopping Button -->
+                            <a href="/"
+                                class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-custom-color-1 hover:bg-custom-color-2 focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200">
+                                Continue Shopping
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 -mr-1 h-5 w-5" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                                </svg>
+                            </a>
+
+                            <!-- Optional: Recommended Products -->
+                            {{!-- <div class="mt-10">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">You Might Like</h3>
+                                <div class="grid grid-cols-2 gap-4">
+                                    {{#each recommendedProducts}}
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <img src="{{this.image}}" alt="{{this.name}}"
+                                            class="w-full h-24 object-contain mb-2">
+                                        <h4 class="text-sm font-medium text-gray-900 truncate">{{this.name}}</h4>
+                                        <p class="text-sm text-blue-600 mt-1">₹{{this.price}}</p>
+                                        <button onclick="addToCart('{{this._id}}')"
+                                            class="mt-2 w-full bg-blue-100 text-blue-600 text-xs font-medium py-1 px-2 rounded hover:bg-blue-200 transition-colors">
+                                            Add to Cart
+                                        </button>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                            </div> --}}
+                        </div>
+                    </section>
+                    {{/if}}
                 </div>
             </div>
 
+            {{#if products.length}}
             <div class="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
                 <div
                     class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
@@ -98,7 +150,8 @@
                         <div class="space-y-2">
                             <dl class="flex items-center justify-between gap-4">
                                 <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Original price</dt>
-                                <dd class="text-base font-medium text-gray-900 dark:text-white total-shower">{{total}} Rs.</dd>
+                                <dd class="text-base font-medium text-gray-900 dark:text-white total-shower">{{total}}
+                                    Rs.</dd>
                             </dl>
 
                             <dl class="flex items-center justify-between gap-4">
@@ -120,12 +173,14 @@
                         <dl
                             class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
                             <dt class="text-base font-bold text-gray-900 dark:text-white">Total</dt>
-                            <dd class="text-base font-bold text-gray-900 dark:text-white second-total-shower">{{total}} Rs.</dd>
+                            <dd class="text-base font-bold text-gray-900 dark:text-white second-total-shower">{{total}}
+                                Rs.</dd>
                         </dl>
                     </div>
 
                     <a href="/place-order"
-                        class="flex w-full items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800">Place Order</a>
+                        class="flex w-full items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800">Place
+                        Order</a>
 
                     <div class="flex items-center justify-center gap-2">
                         <span class="text-sm font-normal text-gray-500 dark:text-gray-400"> or </span>
@@ -141,6 +196,9 @@
                     </div>
                 </div>
             </div>
+            {{else}}
+            {{/if}}
+
         </div>
     </div>
 </section>

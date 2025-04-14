@@ -1,6 +1,8 @@
 <section>
+    {{#if cartCount}}
     <form action="" id="checkout-form">
         <div class="main px-6 flex flex-col md:flex-row lg:px-14 py-8 antialiased md:py-12 gap-4 justify-center">
+
 
             <div class="first md:w-6/12 lg:w-6/12">
                 <h2 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-6">Delivery Details</h2>
@@ -62,6 +64,41 @@
 
 
 
+
+
         </div>
     </form>
+    {{else}}
+    <!-- views/user/no-orders.hbs -->
+    <section class="min-h-[70vh] flex items-center justify-center px-4 py-32">
+        <div class="max-w-md w-full text-center">
+            <!-- Icon -->
+            {{!-- <div class="mx-auto mb-6 text-gray-400 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+            </div> --}}
+            <div class="flex justify-center mb-6 text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+            </div>
+
+            <!-- Message -->
+            <h2 class="text-2xl font-medium text-gray-800 mb-2">No Orders Yet</h2>
+            <p class="text-gray-500 mb-6">You haven't placed any orders with us yet.</p>
+
+            <!-- Action Button -->
+            <a href="/"
+                class="inline-block px-6 py-2 text-white rounded-md bg-custom-color-1 hover:bg-custom-color-2 transition-colors">
+                Start Shopping
+            </a>
+        </div>
+    </section>
+
+    {{/if}}
 </section>

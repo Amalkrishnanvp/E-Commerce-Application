@@ -362,6 +362,7 @@ module.exports = {
       products: products,
       status: status,
       totalAmount: totalPrice,
+      date: new Date(),
     };
 
     // create order object for placing order
@@ -375,6 +376,8 @@ module.exports = {
       .collection(essentials.CART_COLLECTION)
       .deleteOne({ user: new ObjectId(userId) });
 
+    console.log("hello", response);
+
     return response;
   },
 
@@ -386,5 +389,71 @@ module.exports = {
       .findOne({ user: new ObjectId(userId) });
 
     return cart.products;
+  },
+
+  // function get user orders
+  getUserOrders: async (userId) => {
+    const orders = await dbModule
+      .getDb()
+      .collection(essentials.ORDER_COLLECTION)
+      .find({
+        userId: new ObjectId(userId),
+      })
+      .toArray();
+
+    console.log(orders);
+    return orders;
+  },
+
+  // function to get ordered products list
+  getOrderProducts: async (orderId) => {
+    let orderItems = await dbModule
+      .getDb()
+      .collection(essentials.ORDER_COLLECTION)
+      .aggregate([
+        {
+          $match: { _id: new ObjectId(orderId) },
+        },
+        {
+          $unwind: "$products",
+        },
+        {
+          $project: {
+            item: "$products.item",
+            quantity: "$products.quantity",
+          },
+        },
+        {
+          $lookup: {
+            from: essentials.PRODUCT_COLLECTION,
+            localField: "item",
+            foreignField: "_id",
+            as: "product",
+          },
+        },
+        {
+          $project: {
+            item: 1,
+            quantity: 1,
+            product: { $arrayElemAt: ["$product", 0] },
+          },
+        },
+      ])
+      .toArray();
+
+    return orderItems;
+  },
+
+  // function to get a single order details
+  getSingleOrder: async (orderId) => {
+    orderId = orderId.toString();
+    orderId = orderId.trim();
+    const objectId = new ObjectId(orderId);
+    let order = await dbModule
+      .getDb()
+      .collection(essentials.ORDER_COLLECTION)
+      .findOne({ _id: objectId });
+
+    return order;
   },
 };

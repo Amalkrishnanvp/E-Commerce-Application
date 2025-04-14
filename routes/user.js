@@ -112,6 +112,7 @@ router.get("/cart", verifyLogin, async (req, res, next) => {
   let user = req.session.user;
   let userId = req.session.user._id;
   let cartCount = null;
+  let total;
 
   let products = await userHelpers.getCartProducts(userId);
 
@@ -119,15 +120,15 @@ router.get("/cart", verifyLogin, async (req, res, next) => {
     cartCount = await userHelpers.getCartCount(userId);
   }
 
-  let total = await userHelpers.getTotalAmount(userId);
+  if (cartCount) {
+    total = await userHelpers.getTotalAmount(userId);
+  }
 
   res.render("user/cart", { products, user, cartCount, total });
 });
 
 /* GET - Add product to cart */
 router.get("/add-to-cart/:id", async (req, res, next) => {
-  console.log("api call");
-
   const result = await userHelpers.addToCart(
     req.params.id,
     req.session.user._id
@@ -158,6 +159,7 @@ router.get("/place-order", verifyLogin, async (req, res, next) => {
   let user = req.session.user;
   let userId = req.session.user._id;
   let cartCount = null;
+  let total;
 
   let products = await userHelpers.getCartProducts(userId);
 
@@ -165,8 +167,11 @@ router.get("/place-order", verifyLogin, async (req, res, next) => {
     cartCount = await userHelpers.getCartCount(userId);
   }
 
-  let total = await userHelpers.getTotalAmount(userId);
-  res.render("user/order", { products, user, cartCount, total });
+  if (cartCount) {
+    total = await userHelpers.getTotalAmount(userId);
+  }
+
+  res.render("user/place-order", { products, user, cartCount, total });
 });
 
 /* POST - place order */
@@ -184,7 +189,44 @@ router.post("/place-order", verifyLogin, async (req, res, next) => {
     userId
   );
 
-  res.json({ status: true });
+  const orderId = result.insertedId;
+
+  res.json({ status: true, orderId: orderId });
+});
+
+router.get("/order-success", verifyLogin, async (req, res) => {
+  let user = req.session.user;
+  let userId = req.session.user._id;
+  const orderId = req.query.order_id;
+
+  const order = await userHelpers.getSingleOrder(orderId);
+  console.log("hi", order);
+
+  res.render("user/order-success", {
+    user,
+    orderId: orderId,
+    paymentMethod: order.paymentMethod,
+    totalAmount: order.totalAmount,
+  });
+});
+
+router.get("/orders", verifyLogin, async (req, res) => {
+  let user = req.session.user;
+  let userId = req.session.user._id;
+
+  let orders = await userHelpers.getUserOrders(userId);
+  res.render("user/orders", { user, orders });
+});
+
+router.get("/view-order-products/:id", verifyLogin, async (req, res) => {
+  let user = req.session.user;
+  let userId = req.session.user._id;
+  let orderId = req.params.id;
+
+  let products = await userHelpers.getOrderProducts(orderId);
+  console.log(products);
+
+  res.render("user/view-order-products", { user, products });
 });
 
 module.exports = router;
