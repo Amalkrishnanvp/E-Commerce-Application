@@ -32,11 +32,60 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "post",
         data: $("#checkout-form").serialize(),
         success: (response) => {
-          if (response.status) {
+          if (response.codSuccess) {
             location.href = `/order-success?order_id=${response.orderId}`;
+          } else {
+            console.log(response);
+
+            razorpayPayment(response);
           }
         },
       });
+    });
+  }
+
+  function razorpayPayment(order) {
+    var options = {
+      key: "rzp_test_HV0g7SpzrvcYME", // Enter the Key ID generated from the Dashboard
+      amount: order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      currency: "INR",
+      name: "Amal Products", //your business name
+      description: "Test Transaction",
+      image: "https://example.com/your_logo",
+      order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      handler: function (response) {
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature);
+
+        verifyPayment(response, order);
+      },
+      prefill: {
+        //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+        name: "Gaurav Kumar", //your customer's name
+        email: "gaurav.kumar@example.com",
+        contact: "9000090000", //Provide the customer's phone number for better conversion rates
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+
+    let rzp1 = new Razorpay(options);
+    rzp1.open();
+  }
+
+  function verifyPayment(payment, order) {
+    $.ajax({
+      url: "/verify-payment",
+      data: {
+        payment,
+        order,
+      },
+      method: "post",
     });
   }
 });

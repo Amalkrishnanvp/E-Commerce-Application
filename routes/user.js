@@ -191,7 +191,14 @@ router.post("/place-order", verifyLogin, async (req, res, next) => {
 
   const orderId = result.insertedId;
 
-  res.json({ status: true, orderId: orderId });
+  if (req.body["payment-method"] == "COD") {
+    res.json({ codSuccess: true, orderId: orderId });
+  } else {
+    const result = await userHelpers.generateRazorpay(orderId, total);
+    console.log("hi", result);
+
+    res.json(result);
+  }
 });
 
 router.get("/order-success", verifyLogin, async (req, res) => {
@@ -227,6 +234,10 @@ router.get("/view-order-products/:id", verifyLogin, async (req, res) => {
   console.log(products);
 
   res.render("user/view-order-products", { user, products });
+});
+
+router.post("/verify-payment", verifyLogin, async (req, res) => {
+  console.log(req.body);
 });
 
 module.exports = router;

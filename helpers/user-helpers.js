@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const { Collection, ReturnDocument } = require("mongodb");
 const ObjectId = require("mongodb").ObjectId;
 const saltRounds = 10;
+const Razorpay = require("razorpay");
 
 module.exports = {
   // Function for new user sign up
@@ -453,6 +454,24 @@ module.exports = {
       .getDb()
       .collection(essentials.ORDER_COLLECTION)
       .findOne({ _id: objectId });
+
+    return order;
+  },
+
+  // function to generate razor pay
+  generateRazorpay: async (orderId, total) => {
+    let instance = new Razorpay({
+      key_id: "rzp_test_HV0g7SpzrvcYME",
+      key_secret: "IEcMUmmMv0rwCgolrDX4NzN6",
+    });
+
+    let options = {
+      amount: total,
+      currency: "INR",
+      receipt: orderId,
+    };
+
+    const order = await instance.orders.create(options);
 
     return order;
   },
