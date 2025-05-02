@@ -57,7 +57,7 @@
                                 {{/if}}
                             </a>
                             {{#if user}}
-                            <a href="/place-order"
+                            <a href="/orders"
                                 class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Orders</a>
                             {{/if}}
                         </div>
@@ -78,10 +78,16 @@
                     {{#if user}}
                     <!-- Menu -->
                     <div class="relative ml-3">
-
                         <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
                             class="text-white hidden sm:inline-flex bg-gray-800 hover:bg-gray-700 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center"
-                            type="button">{{user.name}} <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+                            type="button">
+                            <!-- Added user icon here -->
+                            <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor" viewBox="0 0 14 18">
+                                <path
+                                    d="M7 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm2 1H5a5 5 0 0 0-5 5v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2a5 5 0 0 0-5-5Z" />
+                            </svg>
+                            {{user.name}} <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 1 4 4 4-4" />
@@ -102,21 +108,25 @@
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                 aria-labelledby="dropdownDefaultButton">
                                 <li>
-                                    <a href="/logout" class="block px-4 py-2 hover:bg-gray-700">Log
-                                        out</a>
+                                    <a href="/logout" class="block px-4 py-2 hover:bg-gray-700">Log out</a>
                                 </li>
                             </ul>
                         </div>
-
                     </div>
                     {{else}}
                     <!-- Menu -->
                     <div class="relative ml-3">
-
                         <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
                             class="text-white hidden sm:inline-flex bg-gray-800 hover:bg-gray-700 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center"
-                            type="button">Account <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            type="button">
+                            <!-- Added user icon here -->
+                            <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor" viewBox="0 0 14 18">
+                                <path
+                                    d="M7 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm2 1H5a5 5 0 0 0-5 5v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2a5 5 0 0 0-5-5Z" />
+                            </svg>
+                            Account <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 1 4 4 4-4" />
                             </svg>
@@ -136,12 +146,10 @@
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                 aria-labelledby="dropdownDefaultButton">
                                 <li>
-                                    <a href="/login" class="block px-4 py-2 hover:bg-gray-700 dark:hover:text-white">Log
-                                        in</a>
+                                    <a href="/login" class="block px-4 py-2 hover:bg-gray-700">Log in</a>
                                 </li>
                             </ul>
                         </div>
-
                     </div>
                     {{/if}}
 

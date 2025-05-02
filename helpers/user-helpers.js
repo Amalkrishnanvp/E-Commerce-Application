@@ -6,6 +6,7 @@ const { Collection, ReturnDocument } = require("mongodb");
 const ObjectId = require("mongodb").ObjectId;
 const saltRounds = 10;
 const Razorpay = require("razorpay");
+const crypto = require("crypto");
 
 module.exports = {
   // Function for new user sign up
@@ -474,5 +475,40 @@ module.exports = {
     const order = await instance.orders.create(options);
 
     return order;
+  },
+
+  // function to verify payment
+  verifyPayment: async (details) => {
+    let hmac = crypto.createHmac("sha256", "IEcMUmmMv0rwCgolrDX4NzN6");
+
+    hmac.update(
+      details.payment.razorpay_order_id +
+        "|" +
+        details.payment.razorpay_payment_id
+    );
+    hmac = hmac.digest("hex");
+
+    if (hmac == details.payment.razorpay_signature) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
+  // function to change payment status
+  changePaymentStatus: async (orderId) => {
+    const response = await dbModule
+      .getDb()
+      .collection(essentials.ORDER_COLLECTION)
+      .updateOne(
+        { _id: new ObjectId(orderId) },
+        {
+          $set: {
+            status: "placed",
+          },
+        }
+      );
+
+    return response;
   },
 };

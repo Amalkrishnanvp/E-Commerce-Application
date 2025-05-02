@@ -67,46 +67,16 @@
                     {{#if user}}
                     <!-- Menu -->
                     <div class="relative ml-3">
-
                         <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
                             class="text-white hidden sm:inline-flex bg-gray-800 hover:bg-gray-700 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center"
-                            type="button">{{user.name}} <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m1 1 4 4 4-4" />
+                            type="button">
+                            <!-- Added user icon here -->
+                            <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor" viewBox="0 0 14 18">
+                                <path
+                                    d="M7 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm2 1H5a5 5 0 0 0-5 5v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2a5 5 0 0 0-5-5Z" />
                             </svg>
-                        </button>
-
-                         <button type="button"
-                            class="sm:hidden relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                            id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                        <span class="absolute -inset-1.5"></span>
-                        <span class="sr-only">Open user menu</span>
-                        <img class="h-8 w-8 rounded-full"
-                            src="/images/hi.jpeg"
-                            alt="">
-                        </button>
-
-                        <!-- Dropdown menu -->
-                        <div id="dropdown"
-                            class="absolute top-12 right-0 z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-44 bg-gray-800">
-                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                aria-labelledby="dropdownDefaultButton">
-                                <li>
-                                    <a href="/logout" class="block px-4 py-2 hover:bg-gray-700">Log
-                                        out</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    {{else}}
-                    <!-- Menu -->
-                    <div class="relative ml-3">
-
-                        <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
-                            class="text-white hidden sm:inline-flex bg-gray-800 hover:bg-gray-700 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center"
-                            type="button">Account <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+                            {{user.name}} <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 1 4 4 4-4" />
@@ -127,12 +97,49 @@
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                 aria-labelledby="dropdownDefaultButton">
                                 <li>
-                                    <a href="/login" class="block px-4 py-2 hover:bg-gray-700">Log
-                                        in</a>
+                                    <a href="/login" class="block px-4 py-2 hover:bg-gray-700">Log in</a>
                                 </li>
                             </ul>
                         </div>
+                    </div>
+                    {{else}}
+                    <!-- Menu -->
 
+                    <div class="relative ml-3">
+                        <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
+                            class="text-white hidden sm:inline-flex bg-gray-800 hover:bg-gray-700 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center"
+                            type="button">
+                            <!-- Added user icon here -->
+                            <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor" viewBox="0 0 14 18">
+                                <path
+                                    d="M7 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm2 1H5a5 5 0 0 0-5 5v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2a5 5 0 0 0-5-5Z" />
+                            </svg>
+                            Account <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 4 4 4-4" />
+                            </svg>
+                        </button>
+
+                        <button type="button"
+                            class="sm:hidden relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                            id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                            <span class="absolute -inset-1.5"></span>
+                            <span class="sr-only">Open user menu</span>
+                            <img class="h-8 w-8 rounded-full" src="/images/hi.jpeg" alt="">
+                        </button>
+
+                        <!-- Dropdown menu -->
+                        <div id="dropdown"
+                            class="absolute top-12 right-0 z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-44 bg-gray-800">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                aria-labelledby="dropdownDefaultButton">
+                                <li>
+                                    <a href="/login" class="block px-4 py-2 hover:bg-gray-700">Log in</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     {{/if}}
 

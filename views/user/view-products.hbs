@@ -36,10 +36,19 @@
                         </div>
                         <div class="flex flex-col justify-center">
                             <h4 class="text-sm text-right text-gray-700">{{this.Category}}</h4>
+                            {{#if user}}
                             <button onclick="addToCart('{{this._id}}')" class="bg-custom-color-1 hover:bg-custom-color-2 text-white font-semibold py-2 px-3
                                     rounded h-8 text-sm flex items-center mt-2">
                                 Add to Cart
                             </button>
+                            {{else}}
+                            <a href="/cart">
+                                <button onclick="" class="bg-custom-color-1 hover:bg-custom-color-2 text-white font-semibold py-2 px-3
+                                    rounded h-8 text-sm flex items-center mt-2">
+                                    Add to Cart
+                                </button>
+                            </a>
+                            {{/if}}
                         </div>
                     </div>
                 </div>

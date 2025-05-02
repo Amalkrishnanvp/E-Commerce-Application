@@ -237,7 +237,17 @@ router.get("/view-order-products/:id", verifyLogin, async (req, res) => {
 });
 
 router.post("/verify-payment", verifyLogin, async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
+  const data = req.body;
+
+  const result = await userHelpers.verifyPayment(data);
+  const response = await userHelpers.changePaymentStatus(data.order.receipt);
+
+  if (response.modifiedCount > 0) {
+    res.status(200).json({ success: true });
+  } else {
+    res.status(400).json({ success: false });
+  }
 });
 
 module.exports = router;
