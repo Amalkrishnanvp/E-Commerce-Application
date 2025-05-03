@@ -8,10 +8,12 @@ router.get("/", async (req, res, next) => {
   // Access if session exists
   let user = req.session.user;
 
-  // Call function to get all products
-  const products = await productHelpers.getAllProducts();
-
-  res.render("admin/view-products", { admin: true, products, user });
+  // res.render("admin/view-products", { admin: true, products, user });
+  res.render("admin/admin-dashboard", {
+    layout: "layouts/adminLayout",
+    products,
+    user,
+  });
 });
 
 /* GET add product page */
@@ -82,6 +84,65 @@ router.post("/edit-product/:id", (req, res) => {
     let productImage = req.files.Image;
     productImage.mv("./public/product-images/" + productId + ".jpg");
   }
+});
+
+/* GET - Admin profile */
+router.get("/logout", (req, res) => {
+  // Access if session exists
+  let user = req.session.user;
+
+  res.render("admin/admin-logout", {
+    user,
+    layout: "layouts/adminLayout",
+  });
+});
+
+/* GET - Admin dashboard */
+router.get("/dashboard", (req, res) => {
+  // Access if session exists
+  let user = req.session.user;
+
+  res.render("admin/admin-dashboard", {
+    user,
+    layout: "layouts/adminLayout",
+  });
+});
+
+/* GET - Users list */
+router.get("/users", (req, res) => {
+  // Access if session exists
+  let user = req.session.user;
+
+  res.render("admin/view-users", {
+    user,
+    layout: "layouts/adminLayout",
+  });
+});
+
+/* GET - Products list */
+router.get("/products", async (req, res) => {
+  // Access if session exists
+  let user = req.session.user;
+
+ // Call function to get all products
+ const products = await productHelpers.getAllProducts();
+
+  res.render("admin/view-products", {
+    user,
+    products,
+    layout: "layouts/adminLayout",
+  });
+});
+
+/* GET - Orders list */
+router.get("/orders", (req, res) => {
+  // Access if session exists
+  let user = req.session.user;
+
+  res.render("admin/view-orders", {
+    user,
+    layout: "layouts/adminLayout",
+  });
 });
 
 module.exports = router;

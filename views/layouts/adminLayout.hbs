@@ -1,0 +1,83 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{title}}</title>
+
+    {{! Css styles }}
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+
+    {{! Google Fonts }}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+
+    {{! Font Awesome }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+
+    {{!-- Topbar --}}
+    <header class="sticky z-50 top-0">
+        <nav class="bg-primaryColor">
+            {{!-- Flex container --}}
+            <div class="h-24 flex justify-between items-center p-4">
+                {{!-- 1. Admin panel heading --}}
+                <div>
+                    <h2 class="text-white text-2xl font-semibold">Admin Panel</h2>
+                </div>
+
+                {{!-- 2. Navigation and user dropdown --}}
+
+
+            </div>
+        </nav>
+    </header>
+
+
+    {{!-- Sidebar --}}
+    <aside class="w-48 fixed">
+        <div class="h-screen bg-secondaryColor py-4 px-2">
+            <ul class="space-y-2">
+                <li><a href="/admin/dashboard"
+                        class="px-2 py-1.5 text-white hover:bg-gray-800 flex rounded-md">Dashboard</a></li>
+                <li><a href="/admin/users" class="px-2 py-1.5 text-white hover:bg-gray-800 flex rounded-md">Users</a>
+                </li>
+                <li><a href="/admin/products"
+                        class="px-2 py-1.5 text-white hover:bg-gray-800 flex rounded-md">Products</a></li>
+                <li><a href="/admin/orders" class="px-2 py-1.5 text-white hover:bg-gray-800 flex rounded-md">Orders</a>
+                </li>
+                <li><a href="/admin/logout" class="px-2 py-1.5 text-white hover:bg-gray-800 flex rounded-md">Log Out</a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+
+    {{!-- Main content --}}
+    <main class="p-4 sm:ml-48">
+        {{{body}}}
+    </main>
+
+
+
+
+    {{! Website scripts }}
+    <script src="/javascripts/main.js"></script>
+    <script src="/javascripts/query.js"></script>
+    <script src="/javascripts/cart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</body>
+
+
+
+</html>

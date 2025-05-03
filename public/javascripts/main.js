@@ -9,17 +9,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const deleteModal = document.querySelector("#deleteModal");
   const deleteBtn = document.querySelector(".delete-btn");
 
-  mobileBtn.addEventListener("click", () => {
-    mobileMenu.classList.toggle("hidden");
-  });
+  if (mobileBtn) {
+    mobileBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+  }
 
-  dropdownDefaultButton.addEventListener("click", () => {
-    dropdown.classList.toggle("hidden");
-  });
+  if (dropdownDefaultButton) {
+    dropdownDefaultButton.addEventListener("click", () => {
+      dropdown.classList.toggle("hidden");
+    });
+  }
 
-  userMenuButton.addEventListener("click", () => {
-    dropdown.classList.toggle("hidden");
-  });
+  if (userMenuButton) {
+    userMenuButton.addEventListener("click", () => {
+      dropdown.classList.toggle("hide");
+    });
+  }
 
   const checkoutForm = document.getElementById("checkout-form");
 
@@ -87,14 +93,21 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       method: "post",
       success: (response) => {
-        console.log(response);
+        console.log("final: ", response);
 
         if (response.success) {
-          location.href = `/order-success?order_id=${order.id}`;
+          location.href = `/order-success?order_id=${order.receipt}`;
         } else {
           alert("Payment failed");
         }
       },
     });
   }
+
+  const userButton = document.querySelector("#user-button");
+
+  userButton.addEventListener("click", () => {
+    const dropdownMenu = document.getElementById("dropdown-menu");
+    dropdownMenu.classList.toggle("hidden");
+  });
 });

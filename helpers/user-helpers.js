@@ -467,7 +467,7 @@ module.exports = {
     });
 
     let options = {
-      amount: total,
+      amount: total * 100,
       currency: "INR",
       receipt: orderId,
     };
