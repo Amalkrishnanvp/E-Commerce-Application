@@ -79,3 +79,26 @@ async function removeProd(cartId, productId) {
     console.error("Error: ", error);
   }
 }
+
+async function shipOrder(orderId, event) {
+  event.preventDefault();
+  alert("hi");
+
+  const response = await fetch("/admin/ship-order", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      orderId,
+    }),
+  });
+
+  const data = await response.json();
+  console.log(data);
+
+  if (response.ok) {
+    alert(data.message);
+    location.reload(); // refresh the page
+  }
+}

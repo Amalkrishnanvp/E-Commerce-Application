@@ -106,8 +106,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const userButton = document.querySelector("#user-button");
 
-  userButton.addEventListener("click", () => {
-    const dropdownMenu = document.getElementById("dropdown-menu");
-    dropdownMenu.classList.toggle("hidden");
-  });
+  if (userButton) {
+    userButton.addEventListener("click", () => {
+      const dropdownMenu = document.getElementById("dropdown-menu");
+      dropdownMenu.classList.toggle("hidden");
+    });
+  }
 });

@@ -11,7 +11,6 @@ router.get("/", async (req, res, next) => {
   // res.render("admin/view-products", { admin: true, products, user });
   res.render("admin/admin-dashboard", {
     layout: "layouts/adminLayout",
-    products,
     user,
   });
 });
@@ -124,8 +123,8 @@ router.get("/products", async (req, res) => {
   // Access if session exists
   let user = req.session.user;
 
- // Call function to get all products
- const products = await productHelpers.getAllProducts();
+  // Call function to get all products
+  const products = await productHelpers.getAllProducts();
 
   res.render("admin/view-products", {
     user,
@@ -135,14 +134,35 @@ router.get("/products", async (req, res) => {
 });
 
 /* GET - Orders list */
-router.get("/orders", (req, res) => {
+router.get("/orders", async (req, res) => {
   // Access if session exists
   let user = req.session.user;
 
+  const placedOrders = await productHelpers.getPlacedOrders();
+  console.log(placedOrders);
+
   res.render("admin/view-orders", {
     user,
+    placedOrders,
     layout: "layouts/adminLayout",
   });
+});
+
+router.post("/ship-order", async (req, res) => {
+  console.log("post ship order");
+
+  const orderId = req.body.orderId;
+  console.log(orderId);
+
+  const result = await productHelpers.shipOrder(orderId);
+
+  if (result.modifiedCount === 0) {
+    return res
+      .status(404)
+      .json({ message: "Order not found or already shipped" });
+  }
+
+  res.json({ message: "Order shipped" });
 });
 
 module.exports = router;

@@ -34,7 +34,10 @@
                     <h2 class="text-white text-2xl font-semibold">Admin Panel</h2>
                 </div>
 
-                {{!-- 2. Navigation and user dropdown --}}
+                {{!-- 2. toggle button for small screens --}}
+                <div class="mr-4 sm:hidden">
+                    <button class="toggle-button"><i class="fa-solid fa-bars text-white text-xl"></i></button>
+                </div>
 
 
             </div>
@@ -43,8 +46,8 @@
 
 
     {{!-- Sidebar --}}
-    <aside class="w-48 fixed">
-        <div class="h-screen bg-secondaryColor py-4 px-2">
+    <aside class="w-48 hidden sm:block z-50 fixed" id="side-bar">
+        <div class="h-screen bg-secondaryColor py-4 px-2 ">
             <ul class="space-y-2">
                 <li><a href="/admin/dashboard"
                         class="px-2 py-1.5 text-white hover:bg-gray-800 flex rounded-md">Dashboard</a></li>
@@ -78,6 +81,11 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </body>
 
-
-
 </html>
+
+<script>
+    const toggleButton = document.querySelector(".toggle-button");
+    toggleButton.addEventListener("click", () => {
+        document.getElementById("side-bar").classList.toggle("hidden");
+    })
+</script>

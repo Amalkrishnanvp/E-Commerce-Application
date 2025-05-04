@@ -76,4 +76,28 @@ module.exports = {
 
     return response;
   },
+
+  // Function to get placed orders
+  getPlacedOrders: async (params) => {
+    const response = await dbModule
+      .getDb()
+      .collection(essentials.ORDER_COLLECTION)
+      .find({ status: "placed" })
+      .toArray();
+
+    return response;
+  },
+
+  // Function to ship order
+  shipOrder: async (orderId) => {
+    const result = await dbModule
+      .getDb()
+      .collection(essentials.ORDER_COLLECTION)
+      .updateOne(
+        { _id: new ObjectId(orderId) },
+        { $set: { status: "shipped" } }
+      );
+
+    return result;
+  },
 };
