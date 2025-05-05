@@ -3,10 +3,20 @@ const router = express.Router();
 const productHelpers = require("../helpers/product-helpers");
 const path = require("path");
 
+// Function to verify login
+const verifyLogin = (req, res, next) => {
+  if (req.session.loggedIn) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
+};
+
 /* GET Admin page */
-router.get("/", async (req, res, next) => {
+router.get("/", verifyLogin, async (req, res, next) => {
   // Access if session exists
   let user = req.session.user;
+  console.log(user);
 
   // res.render("admin/view-products", { admin: true, products, user });
   res.render("admin/admin-dashboard", {
