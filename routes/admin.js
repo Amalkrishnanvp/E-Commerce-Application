@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const productHelpers = require("../helpers/product-helpers");
 const path = require("path");
+const adminHelpers = require("../helpers/admin-helpers");
 
 // Function to verify login
 const verifyLogin = (req, res, next) => {
@@ -121,12 +122,15 @@ router.get("/dashboard", (req, res) => {
 });
 
 /* GET - Users list */
-router.get("/users", (req, res) => {
+router.get("/users", async (req, res) => {
   // Access if session exists
   let user = req.session.user;
 
+  const users = await adminHelpers.getUsers();
+
   res.render("admin/view-users", {
     user,
+    users,
     layout: "layouts/adminLayout",
   });
 });
