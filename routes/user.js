@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const productHelpers = require("../helpers/product-helpers");
 const userHelpers = require("../helpers/user-helpers");
+const dbModule = require("../config/connection");
+const essentials = require("../config/essentials");
+const ObjectId = require("mongodb").ObjectId;
 
 // Function to verify login
 const verifyLogin = (req, res, next) => {
@@ -32,7 +35,7 @@ router.get("/", async (req, res, next) => {
 /* GET - Render login page */
 router.get("/login", (req, res, next) => {
   // render login page and products page based on logged in state
-  if (req.session.loggedIn) {
+  if (req.session.loggedIn && req.session.user.role === "user") {
     res.redirect("/");
   } else {
     res.render("user/login", { loginErr: req.session.loginErr });
@@ -220,9 +223,30 @@ router.get("/order-success", verifyLogin, async (req, res) => {
 router.get("/orders", verifyLogin, async (req, res) => {
   let user = req.session.user;
   let userId = req.session.user._id;
+  let cartCount;
+
+  if (user) {
+    cartCount = await userHelpers.getCartCount(userId);
+  }
 
   let orders = await userHelpers.getUserOrders(userId);
-  res.render("user/orders", { user, orders });
+  // console.log(orders);
+
+  for (const order of orders) {
+    for (let i = 0; i < order.products.length; i++) {
+      const productId = order.products[i].item;
+      const product = await dbModule
+        .getDb()
+        .collection(essentials.PRODUCT_COLLECTION)
+        .findOne({ _id: new ObjectId(productId) });
+      order.products[i].item = product;
+      console.log(order.products[i]);
+    }
+  }
+
+  // console.log(orders.products);
+
+  res.render("user/orders", { user, orders, cartCount });
 });
 
 router.get("/view-order-products/:id", verifyLogin, async (req, res) => {

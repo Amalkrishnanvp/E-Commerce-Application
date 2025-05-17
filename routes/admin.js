@@ -5,7 +5,9 @@ const path = require("path");
 
 // Function to verify login
 const verifyLogin = (req, res, next) => {
-  if (req.session.loggedIn) {
+  console.log("verify");
+  console.log(req.session);
+  if (req.session.loggedIn && req.session.user.role === "admin") {
     next();
   } else {
     res.redirect("/login");
@@ -14,6 +16,7 @@ const verifyLogin = (req, res, next) => {
 
 /* GET Admin page */
 router.get("/", verifyLogin, async (req, res, next) => {
+  console.log("hello");
   // Access if session exists
   let user = req.session.user;
   console.log(user);

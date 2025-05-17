@@ -22,7 +22,7 @@ hbs.registerHelper("formatDate", function (dateString) {
 });
 
 // Register a helper to display products based on category
-hbs.registerHelper('ifEquals', function (arg1, arg2, options) {
+hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
   return arg1 == arg2 ? options.fn(this) : options.inverse(this);
 });
 
@@ -68,8 +68,8 @@ app.use(
 connectToDb();
 
 // Use routes
-app.use("/", userRouter);
 app.use("/admin", adminRouter);
+app.use("/", userRouter);
 
 // Start server
 app.listen(port, () => {
