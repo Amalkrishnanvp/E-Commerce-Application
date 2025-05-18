@@ -1,0 +1,15 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Frontend for e-commerce application",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tailwindcss -i ./src/input.css -o ./public/stylesheets/style.css --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.10",
+    "@tailwindcss/aspect-ratio": "^0.4.2"
+  }
+}
