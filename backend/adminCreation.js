@@ -18,7 +18,7 @@ module.exports = {
           role: "admin",
         };
 
-        await adminCollection.insertOne({ adminData });
+        await adminCollection.insertOne(adminData);
         console.log("Admin created");
       } else {
         // return;
