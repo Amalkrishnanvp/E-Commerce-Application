@@ -2,7 +2,7 @@ const dbModule = require("./config/connection");
 const essentials = require("./config/essentials");
 
 module.exports = {
-  adminCreation: async () => {
+  createAdmin: async () => {
     const db = dbModule.getDb();
     try {
       const adminCollection = await db.collection(essentials.adminCollection);

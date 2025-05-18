@@ -73,7 +73,7 @@ const startServer = async () => {
   try {
     // Connect to db
     await connectToDb();
-    await adminCreation();
+    await adminCreation.createAdmin();
 
     // Start server
     app.listen(port, () => {
