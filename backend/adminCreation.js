@@ -21,7 +21,7 @@ module.exports = {
         await adminCollection.insertOne({ adminData });
         console.log("Admin created");
       } else {
-        return;
+        // return;
         console.log("Admin already exists!");
       }
     } catch (error) {

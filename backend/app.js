@@ -80,7 +80,7 @@ const startServer = async () => {
       console.log(`Server started running on port: ${port}`);
     });
   } catch (error) {
-    console.error("Failed to connect to DB, exiting...", err);
+    console.error("Failed to connect to DB, exiting...", error);
     process.exit(1);
   }
 };
