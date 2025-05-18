@@ -6,6 +6,7 @@ const hbs = require("hbs");
 const fileUpload = require("express-fileupload");
 const { connectToDb } = require("./config/connection");
 const session = require("express-session");
+const adminCreation = require("./adminCreation");
 
 // Register a helper to add 1 to the index
 hbs.registerHelper("addOne", (index) => {
@@ -72,6 +73,7 @@ const startServer = async () => {
   try {
     // Connect to db
     await connectToDb();
+    await adminCreation();
 
     // Start server
     app.listen(port, () => {
