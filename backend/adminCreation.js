@@ -1,5 +1,5 @@
-const dbModule = require("./backend/config/connection");
-const essentials = require("./backend/config/essentials");
+const dbModule = require("./config/connection");
+const essentials = require("./config/essentials");
 
 module.exports = {
   adminCreation: async () => {
