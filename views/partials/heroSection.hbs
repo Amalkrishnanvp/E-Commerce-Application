@@ -1,0 +1,47 @@
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-purple-600 to-blue-600 text-white overflow-hidden hero-section">
+    <div class="absolute inset-0 bg-image">
+        <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            alt="Background" class="object-cover w-full h-full opacity-20">
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 py-24 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <!-- Left Column - Content -->
+            <div class="text-center md:text-left text-black">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
+                    Discover Amazing Products
+                </h1>
+                <p class="text-lg md:text-xl mb-8 max-w-lg">
+                    Shop the latest trends in fashion, electronics, and more. Enjoy free shipping on orders over ₹5000!
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#products"
+                        class="bg-custom-color-1 hover:bg-custom-color-2 text-white  px-8 py-3 rounded-lg font-semibold text-lg transition duration-300 transform hover:scale-105">
+                        Shop Now
+                    </a>
+                    {{!-- <a href="#sale"
+                        class="border-2 border-white hover:bg-white hover:text-purple-600 px-8 py-3 rounded-lg font-semibold text-lg transition duration-300 transform hover:scale-105">
+                        Sale Items
+                    </a> --}}
+                </div>
+            </div>
+
+            <!-- Right Column - Product Image -->
+            <div class="hidden md:block relative">
+                <div class="relative w-full h-96">
+                    <div class="absolute -top-8 -left-8 w-full h-full bg-gray-800 rounded-2xl"></div>
+                    <div class="absolute top-0 left-0 w-full h-full bg-white rounded-2xl shadow-2xl overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                            alt="Featured Product" class="object-cover w-full h-full">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Decorative Elements -->
+    <div class="absolute bottom-0 left-0 right-0 h-16 bg-white opacity-10"></div>
+    <div class="absolute top-1/4 right-0 w-32 h-32 bg-purple-400 rounded-full filter blur-3xl opacity-20"></div>
+    <div class="absolute bottom-1/3 left-0 w-48 h-48 bg-blue-400 rounded-full filter blur-3xl opacity-20"></div>
+</section>

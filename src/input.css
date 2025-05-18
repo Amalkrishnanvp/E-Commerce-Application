@@ -11,3 +11,9 @@
 html {
   scroll-behavior: smooth;
 }
+.hero-section {
+  height: 90vh;
+}
+.bg-image {
+  height: 100%;
+}

@@ -95,111 +95,101 @@
 
 
         {{#each orders}}
-        <!-- Order Information Section -->
+        <!-- Compact Order Card -->
         <div class="space-y-4 pt-5 dark:border-gray-700 dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-sm">
 
+            <!-- Order and Delivery Info in Single Row -->
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                     <h3 class="text-lg font-medium text-gray-900 dark:text-white">Order Summary</h3>
                     <dl class="mt-2 space-y-2">
                         <div class="flex items-center justify-between">
-                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Order Number</dt>
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Order #</dt>
                             <dd class="text-sm text-gray-900 dark:text-white">{{addOne @index}}</dd>
                         </div>
                         <div class="flex items-center justify-between">
-                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Order Date</dt>
-                            <dd class="text-sm text-gray-900 dark:text-white"> {{formatDate this.date}}</dd>
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Date</dt>
+                            <dd class="text-sm text-gray-900 dark:text-white">{{formatDate this.date}}</dd>
                         </div>
                         <div class="flex items-center justify-between">
-                            <dt class="text-sm font-medium text-gray-400">Order Status</dt>
+                            <dt class="text-sm font-medium text-gray-400">Status</dt>
                             <dd class="text-sm font-medium">
                                 <span class="px-2 py-1 rounded-full text-white">
                                     {{this.status}}
                                 </span>
                             </dd>
                         </div>
-                        <div class="flex items-center justify-between">
-                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Payment Method</dt>
-                            <dd class="text-sm text-gray-900 dark:text-white">{{this.paymentMethod}}</dd>
-                        </div>
                     </dl>
                 </div>
 
                 <div>
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Delivery Information</h3>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Delivery</h3>
                     <dl class="mt-2 space-y-2">
                         <div class="flex items-center justify-between">
-                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Address</dt>
-                            <dd class="text-sm text-gray-900 dark:text-white"> {{this.deliveryDetails.address}}</dd>
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Payment</dt>
+                            <dd class="text-sm text-gray-900 dark:text-white">{{this.paymentMethod}}</dd>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Mobile</dt>
+                            <dd class="text-sm text-gray-900 dark:text-white">{{this.deliveryDetails.mobile}}</dd>
                         </div>
                         <div class="flex items-center justify-between">
                             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Pincode</dt>
                             <dd class="text-sm text-gray-900 dark:text-white">{{this.deliveryDetails.pincode}}</dd>
                         </div>
-                        <div class="flex items-center justify-between">
-                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Mobile</dt>
-                            <dd class="text-sm text-gray-900 dark:text-white"> {{this.deliveryDetails.mobile}}</dd>
-                        </div>
                     </dl>
                 </div>
             </div>
 
-            <!-- Order Items Section -->
-            <div class="mt-6">
-                <h3 class="text-lg font-medium text-gray-900 dark:text-white">Order Items</h3>
-                <div class="mt-4 space-y-4">
+            <!-- Combined Product Images Row -->
+            <div class="mt-4">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white">Items ({{this.products.length}})</h3>
+                <div class="mt-2 flex flex-wrap gap-2">
                     {{#each this.products}}
-                    <div class="flex items-center rounded-lg border border-gray-200 p-4 dark:border-gray-700">
-                        <img class="h-16 w-16 rounded-md object-cover" src="{{this.item.ImagePath}}"
-                            alt="{{this.item.Name}}">
-                        <div class="ml-4 flex-1">
-                            <h4 class="text-sm font-medium text-gray-900 dark:text-white">{{this.item.Name}}</h4>
-                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Quantity: {{this.quantity}}</p>
+                    <div class="relative group">
+                        <img class="h-14 w-14 rounded-md object-cover border border-gray-200 dark:border-gray-600"
+                            src="{{this.item.ImagePath}}" alt="{{this.item.Name}}"
+                            title="{{this.item.Name}} (Qty: {{this.quantity}}) - ₹{{this.item.Price}}">
+                        <div
+                            class="absolute bottom-0 right-0 bg-black bg-opacity-70 text-white text-xs px-1 rounded-tl">
+                            ×{{this.quantity}}
                         </div>
-                        <div class="text-sm font-medium text-gray-900 dark:text-white">₹{{this.item.Price}}</div>
                     </div>
                     {{/each}}
                 </div>
             </div>
 
-            <!-- Payment Summary Section -->
-            <div class="mt-6 space-y-2">
-                <h3 class="text-lg font-medium text-gray-900 dark:text-white">Payment Summary</h3>
-                <dl class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Subtotal</dt>
-                        <dd class="text-sm text-gray-900 dark:text-white">₹{{this.totalAmount}}</dd>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Shipping</dt>
-                        <dd class="text-sm text-gray-900 dark:text-white">₹0</dd>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Tax</dt>
-                        <dd class="text-sm text-gray-900 dark:text-white">₹0</dd>
-                    </div>
-                    <div class="flex items-center justify-between border-t border-gray-200 pt-2 dark:border-gray-700">
-                        <dt class="text-base font-bold text-gray-900 dark:text-white">Total</dt>
-                        <dd class="text-base font-bold text-gray-900 dark:text-white">₹{{this.totalAmount}}</dd>
-                    </div>
-                </dl>
+            <!-- Payment Summary - Compact Version -->
+            <div class="mt-4 grid grid-cols-2 gap-2 text-sm">
+                <div class="flex justify-between">
+                    <span class="text-gray-500 dark:text-gray-400">Subtotal:</span>
+                    <span class="text-gray-900 dark:text-white">₹{{this.totalAmount}}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500 dark:text-gray-400">Shipping:</span>
+                    <span class="text-gray-900 dark:text-white">₹0</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500 dark:text-gray-400">Tax:</span>
+                    <span class="text-gray-900 dark:text-white">₹0</span>
+                </div>
+                <div
+                    class="flex justify-between font-bold border-t border-gray-200 dark:border-gray-700 pt-1 col-span-2">
+                    <span class="text-gray-900 dark:text-white">Total:</span>
+                    <span class="text-gray-900 dark:text-white">₹{{this.totalAmount}}</span>
+                </div>
             </div>
 
-            <!-- Action Buttons -->
-            <div class="mt-6 flex flex-col space-y-3 sm:flex-row sm:space-x-3 sm:space-y-0">
+            <!-- Action Buttons - Compact Version -->
+            <div class="mt-4 flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0 justify-center">
                 <a href="/view-order-products/{{this._id}}"
-                    class="flex items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">
-                    View Products
+                    class="text-center rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    View Details
                 </a>
-                {{!-- {{#if (eq order.status "Processing")}}
-                <button class="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700">
-                    Track Order
-                </button>
-                {{/if}} --}}
                 <a href="/"
-                    class="flex items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">
-                    Continue Shopping
-                    <svg class="ml-2 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    class=" text-center rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-center">
+                    Shop More
+                    <svg class="ml-1 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M19 12H5m14 0-4 4m4-4-4-4" />
@@ -207,7 +197,6 @@
                 </a>
             </div>
         </div>
-
         {{/each}}
 
 
