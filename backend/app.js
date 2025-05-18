@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-const port = 5000;
+const port = process.env.port || 5000;
 const hbs = require("hbs");
 const fileUpload = require("express-fileupload");
 const { connectToDb } = require("./config/connection");
