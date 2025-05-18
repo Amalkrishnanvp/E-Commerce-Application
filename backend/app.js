@@ -30,20 +30,20 @@ hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
 app.set("view engine", "hbs");
 
 // Set the views directory
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "../frontend/views"));
 
 // Register the layout directory
-app.set("view options", { layout: "layouts/layout" });
+app.set("view options", { layout: "../views/layouts/layout" });
 
 // Register the partials directory
-hbs.registerPartials(path.join(__dirname, "views/partials"));
+hbs.registerPartials(path.join(__dirname, "../frontend/views/partials"));
 
 // Import routes
 const userRouter = require("./routes/user");
 const adminRouter = require("./routes/admin");
 
 // Serve static files from 'public' folder
-app.use(express.static("public"));
+app.use(express.static("../frontend/public"));
 
 // Parse json bodies
 app.use(express.json());
