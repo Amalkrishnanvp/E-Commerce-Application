@@ -64,14 +64,23 @@ app.use(
   })
 );
 
-// Connect to db
-connectToDb();
-
 // Use routes
 app.use("/admin", adminRouter);
 app.use("/", userRouter);
 
-// Start server
-app.listen(port, () => {
-  console.log(`Server started running on port: ${port}`);
-});
+const startServer = async () => {
+  try {
+    // Connect to db
+    await connectToDb();
+
+    // Start server
+    app.listen(port, () => {
+      console.log(`Server started running on port: ${port}`);
+    });
+  } catch (error) {
+    console.error("Failed to connect to DB, exiting...", err);
+    process.exit(1);
+  }
+};
+
+startServer();
