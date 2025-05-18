@@ -5,7 +5,7 @@ module.exports = {
   createAdmin: async () => {
     const db = dbModule.getDb();
     try {
-      const adminCollection = await db.collection(essentials.adminCollection);
+      const adminCollection = await db.collection(essentials.ADMIN_COLLECTION);
 
       // Check if admin exists
       const adminExists = await adminCollection.findOne({ name: "admin" });
