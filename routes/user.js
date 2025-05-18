@@ -210,7 +210,7 @@ router.get("/order-success", verifyLogin, async (req, res) => {
   const orderId = req.query.order_id;
 
   const order = await userHelpers.getSingleOrder(orderId);
-  console.log("hi", order);
+  // console.log("hi", order);
 
   res.render("user/order-success", {
     user,
@@ -240,7 +240,7 @@ router.get("/orders", verifyLogin, async (req, res) => {
         .collection(essentials.PRODUCT_COLLECTION)
         .findOne({ _id: new ObjectId(productId) });
       order.products[i].item = product;
-      console.log(order.products[i]);
+      // console.log(order.products[i]);
     }
   }
 
