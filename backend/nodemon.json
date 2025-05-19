@@ -1,5 +1,0 @@
-{
-  "watch": ["backend", "frontend"],
-  "ext": "js,hbs,css",
-  "exec": "node app.js"
-}
