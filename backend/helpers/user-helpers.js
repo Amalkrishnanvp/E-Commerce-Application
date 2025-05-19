@@ -71,11 +71,12 @@ module.exports = {
       // If the user is found, compare the provided password with hashed passowrd
       if (user) {
         if (user.role === "admin") {
-          if (user.password === password) {
-            return { logged: true, role: "admin", userData: user };
-          } else {
+          const match = await bcrypt.compare(password, user.password);
+
+          if (!match) {
             return { logged: false, message: "Incorrect password" };
           }
+          return { logged: true, role: "admin", userData: user };
         } else if (user.role === "user") {
           const match = await bcrypt.compare(password, user.password);
 

@@ -65,6 +65,12 @@ app.use(
   })
 );
 
+// Pass session to all views
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
+
 // Use routes
 app.use("/admin", adminRouter);
 app.use("/", userRouter);

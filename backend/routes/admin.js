@@ -31,7 +31,13 @@ router.get("/", verifyLogin, async (req, res, next) => {
 
 /* GET add product page */
 router.get("/add-product", (req, res, next) => {
-  res.render("admin/add-product", { admin: true });
+  // Access if session exists
+  let user = req.session.user;
+  
+  res.render("admin/add-product", {
+    layout: "layouts/adminLayout",
+    user,
+  });
 });
 
 /* POST add product details */
@@ -49,8 +55,15 @@ router.post("/add-product", async (req, res, next) => {
     // Extract the inserted id
     const productId = data.insertedId;
 
+    // Build absolute path to frontend product-images folder
+    const imageLocation = path.join(
+      __dirname,
+      "../../frontend/public/product-images",
+      productId + ".jpg"
+    );
+
     // Move product image to public folder
-    productImage.mv("./public/product-images/" + productId + ".jpg", (err) => {
+    productImage.mv(imageLocation, (err) => {
       if (!err) {
         res.render("admin/add-product");
       } else {

@@ -8,7 +8,7 @@ const ObjectId = require("mongodb").ObjectId;
 
 // Function to verify login
 const verifyLogin = (req, res, next) => {
-  if (req.session.loggedIn) {
+  if (req.session.loggedIn && req.session.role === "user") {
     next();
   } else {
     res.redirect("/login");
@@ -49,6 +49,7 @@ router.post("/login", async (req, res) => {
     const data = req.body;
 
     const result = await userHelpers.doLogin(data);
+    console.log(result)
 
     if (result.logged) {
       if (result.role === "admin") {
@@ -56,6 +57,9 @@ router.post("/login", async (req, res) => {
 
         // Save user data to session
         req.session.user = result.userData;
+        console.log(req.session);
+
+        console.log(req.session.user);
 
         res.redirect("/admin");
       } else if (result.role === "user") {

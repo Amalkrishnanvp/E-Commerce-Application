@@ -4,7 +4,7 @@
   "description": "Backend for e-commerce application",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js --watch . --watch ../frontend/views --watch ../frontend/public --ext js,hbs,css"
   },
   "author": "",
   "license": "ISC",
