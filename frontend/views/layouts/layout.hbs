@@ -26,16 +26,10 @@
 
 <body>
 
-  {{#if admin}}
-  {{> adminHeader}}
-  {{{body}}}
-  {{> adminFooter}}
-  {{else}}
   {{> userHeader}}
   {{{body}}}
   {{> userFooter}}
-  {{/if}}
-
+  
 
 
   {{! Website scripts }}

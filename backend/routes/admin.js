@@ -9,6 +9,8 @@ const verifyLogin = (req, res, next) => {
   console.log("verify");
   console.log(req.session);
   if (req.session.loggedIn && req.session.user.role === "admin") {
+    console.log("daa");
+
     next();
   } else {
     res.redirect("/login");
@@ -33,7 +35,7 @@ router.get("/", verifyLogin, async (req, res, next) => {
 router.get("/add-product", (req, res, next) => {
   // Access if session exists
   let user = req.session.user;
-  
+
   res.render("admin/add-product", {
     layout: "layouts/adminLayout",
     user,

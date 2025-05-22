@@ -8,7 +8,12 @@ const ObjectId = require("mongodb").ObjectId;
 
 // Function to verify login
 const verifyLogin = (req, res, next) => {
-  if (req.session.loggedIn && req.session.role === "user") {
+  console.log("hello");
+  console.log(req.session);
+
+  if (req.session.loggedIn && req.session.user.role === "user") {
+    console.log("poda");
+
     next();
   } else {
     res.redirect("/login");
@@ -49,7 +54,7 @@ router.post("/login", async (req, res) => {
     const data = req.body;
 
     const result = await userHelpers.doLogin(data);
-    console.log(result)
+    console.log(result);
 
     if (result.logged) {
       if (result.role === "admin") {
@@ -115,6 +120,8 @@ router.get("/logout", (req, res, next) => {
 
 /* GET - Render Cart page */
 router.get("/cart", verifyLogin, async (req, res, next) => {
+  console.log("adh;af;");
+
   // Access if session exists
   let user = req.session.user;
   let userId = req.session.user._id;

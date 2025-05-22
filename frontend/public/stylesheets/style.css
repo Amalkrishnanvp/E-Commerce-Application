@@ -671,6 +671,26 @@ video {
   top: 1.25rem;
 }
 
+.right-20 {
+  right: 5rem;
+}
+
+.-right-20 {
+  right: -5rem;
+}
+
+.-right-0 {
+  right: -0px;
+}
+
+.-left-0 {
+  left: -0px;
+}
+
+.left-20 {
+  left: 5rem;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -1493,11 +1513,6 @@ video {
   padding-bottom: 5rem;
 }
 
-.py-24 {
-  padding-top: 6rem;
-  padding-bottom: 6rem;
-}
-
 .py-28 {
   padding-top: 7rem;
   padding-bottom: 7rem;
@@ -1511,6 +1526,11 @@ video {
 .py-32 {
   padding-top: 8rem;
   padding-bottom: 8rem;
+}
+
+.py-36 {
+  padding-top: 9rem;
+  padding-bottom: 9rem;
 }
 
 .py-4 {
@@ -1736,6 +1756,11 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+.text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity, 1));
 }
 
 .underline {
@@ -2065,6 +2090,14 @@ html {
     inset: auto;
   }
 
+  .sm\:left-auto {
+    left: auto;
+  }
+
+  .sm\:right-0 {
+    right: 0px;
+  }
+
   .sm\:mx-auto {
     margin-left: auto;
     margin-right: auto;
@@ -2177,6 +2210,11 @@ html {
 
   .sm\:p-6 {
     padding: 1.5rem;
+  }
+
+  .sm\:px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .sm\:px-6 {

@@ -1,0 +1,5 @@
+{
+  "watch": [".", "../frontend/views", "../frontend/public"],
+  "ext": "js,hbs,css",
+  "ignore": ["node_modules"]
+}

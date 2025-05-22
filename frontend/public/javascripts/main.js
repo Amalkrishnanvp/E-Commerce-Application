@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const userMenuButton = document.querySelector("#user-menu-button");
   const deleteModal = document.querySelector("#deleteModal");
   const deleteBtn = document.querySelector(".delete-btn");
+  const dropdownMobile = document.querySelector("#dropdownMobile");
 
   if (mobileBtn) {
     mobileBtn.addEventListener("click", () => {
@@ -21,9 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // if (dropdownMobile) {
+  //   dropdownMobile.addEventListener("click", () => {
+  //     dropdown.classList.toggle("hidden");
+  //   });
+  // }
+
   if (userMenuButton) {
     userMenuButton.addEventListener("click", () => {
-      dropdown.classList.toggle("hide");
+      dropdown.classList.toggle("hidden");
     });
   }
 
