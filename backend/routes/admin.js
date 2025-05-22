@@ -32,7 +32,7 @@ router.get("/", verifyLogin, async (req, res, next) => {
 });
 
 /* GET add product page */
-router.get("/add-product", (req, res, next) => {
+router.get("/add-product", verifyLogin, (req, res, next) => {
   // Access if session exists
   let user = req.session.user;
 
@@ -86,7 +86,7 @@ router.post("/add-product", async (req, res, next) => {
 });
 
 /* GET delete product */
-router.get("/delete-product/:id", async (req, res, next) => {
+router.get("/delete-product/:id", verifyLogin, async (req, res, next) => {
   let productId = req.params.id;
   const response = await productHelpers.deleteProduct(productId);
 
@@ -94,7 +94,7 @@ router.get("/delete-product/:id", async (req, res, next) => {
 });
 
 /* GET edit product */
-router.get("/edit-product/:id", async (req, res, next) => {
+router.get("/edit-product/:id", verifyLogin, async (req, res, next) => {
   let product = await productHelpers.getProductDetails(req.params.id);
   console.log(product);
   res.render("admin/edit-product", { product });
@@ -126,7 +126,7 @@ router.get("/logout", (req, res) => {
 });
 
 /* GET - Admin dashboard */
-router.get("/dashboard", (req, res) => {
+router.get("/dashboard", verifyLogin, (req, res) => {
   // Access if session exists
   let user = req.session.user;
 
@@ -137,7 +137,7 @@ router.get("/dashboard", (req, res) => {
 });
 
 /* GET - Users list */
-router.get("/users", async (req, res) => {
+router.get("/users", verifyLogin, async (req, res) => {
   // Access if session exists
   let user = req.session.user;
 
@@ -151,7 +151,7 @@ router.get("/users", async (req, res) => {
 });
 
 /* GET - Products list */
-router.get("/products", async (req, res) => {
+router.get("/products", verifyLogin, async (req, res) => {
   // Access if session exists
   let user = req.session.user;
 
@@ -166,7 +166,7 @@ router.get("/products", async (req, res) => {
 });
 
 /* GET - Orders list */
-router.get("/orders", async (req, res) => {
+router.get("/orders", verifyLogin, async (req, res) => {
   // Access if session exists
   let user = req.session.user;
 
