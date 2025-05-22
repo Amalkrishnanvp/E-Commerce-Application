@@ -34,8 +34,24 @@ router.get("/", async (req, res, next) => {
     cartCount = await userHelpers.getCartCount(userId);
   }
 
-  res.render("user/view-products", { products, user, cartCount });
+  res.render("user/home", { products, user, cartCount });
 });
+
+router.get('/products', async (req, res, next) => {
+   // Access if session exists
+  let user = req.session.user;
+  let cartCount = null;
+
+  // Call function to get all products
+  const products = await productHelpers.getAllProducts();
+
+  if (user) {
+    let userId = req.session.user._id;
+    cartCount = await userHelpers.getCartCount(userId);
+  }
+
+  res.render("user/view-products", { products, user, cartCount });
+})
 
 /* GET - Render login page */
 router.get("/login", (req, res, next) => {
