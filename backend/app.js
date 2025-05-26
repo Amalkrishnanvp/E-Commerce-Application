@@ -27,6 +27,71 @@ hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
   return arg1 == arg2 ? options.fn(this) : options.inverse(this);
 });
 
+// Helper function to show status based on payment method
+hbs.registerHelper("paymentMethodClass", function (paymentMethod) {
+  if (paymentMethod === "COD") {
+    return "bg-yellow-100 text-yellow-800";
+  } else {
+    return "bg-green-100 text-green-800";
+  }
+});
+
+// Helper function to get color based on status
+hbs.registerHelper("getStatusColor", function getStatusColor(status) {
+  switch (status) {
+    case "Processing":
+      return "bg-blue-100 text-blue-800";
+    case "Shipped":
+      return "bg-purple-100 text-purple-800";
+    case "Delivered":
+      return "bg-green-100 text-green-800";
+    case "Cancelled":
+      return "bg-red-100 text-red-800";
+    case "Pending":
+      return "bg-yellow-100 text-yellow-800";
+    default:
+      return "bg-gray-100 text-gray-800";
+  }
+});
+
+// Helper function to set selected
+hbs.registerHelper("isSelected", function (currentStatus, optionStatus) {
+  return currentStatus === optionStatus ? "selected" : "";
+});
+
+hbs.registerHelper("shippingLabel", function (paymentMethod) {
+  return paymentMethod === "COD" ? "₹0 (COD)" : "Free";
+});
+
+hbs.registerHelper("paymentStatus", function (paymentMethod, options) {
+  if (paymentMethod === "COD") {
+    return new hbs.handlebars.SafeString(`
+      <div class="flex justify-between">
+        <span class="text-gray-600">Payment Status</span>
+        <span class="px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+          To be collected
+        </span>
+      </div>
+    `);
+  } else {
+    return new hbs.handlebars.SafeString(`
+      <div class="flex justify-between">
+        <span class="text-gray-600">Payment Status</span>
+        <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+          Paid
+        </span>
+      </div>
+    `);
+  }
+});
+
+hbs.registerHelper("multiply", function (a, b) {
+  return a * b;
+});
+
+// Register the partials directory
+hbs.registerPartials(path.join(__dirname, "../frontend/views/partials"));
+
 // Set view engine to hbs
 app.set("view engine", "hbs");
 
@@ -35,9 +100,6 @@ app.set("views", path.join(__dirname, "../frontend/views"));
 
 // Register the layout directory
 app.set("view options", { layout: "../views/layouts/layout" });
-
-// Register the partials directory
-hbs.registerPartials(path.join(__dirname, "../frontend/views/partials"));
 
 // Import routes
 const userRouter = require("./routes/user");

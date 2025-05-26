@@ -100,4 +100,49 @@ module.exports = {
 
     return result;
   },
+
+  // Function to get all orders
+  getAllOrders: async () => {
+    const response = await dbModule
+      .getDb()
+      .collection(essentials.ORDER_COLLECTION)
+      .find()
+      .toArray();
+
+    return response;
+  },
+
+  // Function to get order details
+  getOrderDetails: async (orderId) => {
+    const order = await dbModule
+      .getDb()
+      .collection(essentials.ORDER_COLLECTION)
+      .findOne({ _id: new ObjectId(orderId) });
+
+    // Manually fetch user details
+    const user = await dbModule
+      .getDb()
+      .collection(essentials.USER_COLLECTION)
+      .findOne({ _id: order.userId });
+
+    // Manually fetch product details for each item
+    const products = await Promise.all(
+      order.products.map(async (prod) => {
+        const product = await dbModule
+          .getDb()
+          .collection(essentials.PRODUCT_COLLECTION)
+          .findOne({ _id: prod.item });
+        // console.log(product);
+        return { ...prod, details: product };
+      })
+    );
+
+    // Attach populated data
+    order.user = user;
+    order.products = products;
+
+    console.log("Order Details:", order);
+
+    return order;
+  },
 };
