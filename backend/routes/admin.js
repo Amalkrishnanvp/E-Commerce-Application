@@ -3,6 +3,7 @@ const router = express.Router();
 const productHelpers = require("../helpers/product-helpers");
 const path = require("path");
 const adminHelpers = require("../helpers/admin-helpers");
+const { ObjectId } = require("mongodb");
 
 // Function to verify login
 const verifyAdmin = (req, res, next) => {
@@ -24,11 +25,13 @@ router.get("/", verifyAdmin, async (req, res, next) => {
   let user = req.session.user;
   console.log(user);
 
+  res.redirect("/admin/users");
+
   // res.render("admin/view-products", { admin: true, products, user });
-  res.render("admin/admin-dashboard", {
-    layout: "layouts/adminLayout",
-    user,
-  });
+  // res.render("admin/view-users", {
+  //   layout: "layouts/adminLayout",
+  //   user,
+  // });
 });
 
 /* GET add product page */
@@ -188,6 +191,7 @@ router.get("/orders", verifyAdmin, async (req, res) => {
   });
 });
 
+/* POST - Ship order */
 router.post("/ship-order", verifyAdmin, async (req, res) => {
   console.log("post ship order");
 
@@ -205,10 +209,11 @@ router.post("/ship-order", verifyAdmin, async (req, res) => {
   res.json({ message: "Order shipped" });
 });
 
+/* GET - Get order details page */
 router.get("/order-details/:orderId", verifyAdmin, async (req, res) => {
   // Access if session exists
   let user = req.session.user;
-  
+
   const orderId = req.params.orderId;
 
   // Fetch order details using the orderId
@@ -221,7 +226,44 @@ router.get("/order-details/:orderId", verifyAdmin, async (req, res) => {
   res.render("admin/order-details", {
     order: orderDetails,
     layout: "layouts/adminLayout",
-    user
+    user,
+  });
+});
+
+/* POST - update order status */
+router.post("/orders/update-status", verifyAdmin, async (req, res) => {
+  const orderId = req.body.orderId;
+  const orderStatus = req.body.status;
+
+  const result = await adminHelpers.changeOrderStatus(orderId, orderStatus);
+
+  res.json({ result });
+});
+
+router.post("/delete-selected-products", verifyAdmin, async (req, res) => {
+  const productIds = req.body.productIds;
+
+  const objectIds = productIds.map((productid) => {
+    return new ObjectId(productid);
+  });
+
+  const result = await adminHelpers.deletedSelectedProducts(objectIds);
+
+  res.json(result);
+});
+
+router.get("/view-user-cart/:id", verifyAdmin, async (req, res) => {
+  // Access if session exists
+  let user = req.session.user;
+
+  const userId = new ObjectId(req.params.id);
+  const userCartProducts = await productHelpers.getUserCart(userId);
+  console.log("xxxxx: ", userCartProducts);
+
+  res.render("admin/view-user-cart", {
+    user,
+    userCartProducts,
+    layout: "layouts/adminLayout",
   });
 });
 

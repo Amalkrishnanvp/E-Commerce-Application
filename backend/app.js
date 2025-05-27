@@ -41,6 +41,8 @@ hbs.registerHelper("getStatusColor", function getStatusColor(status) {
   switch (status) {
     case "Processing":
       return "bg-blue-100 text-blue-800";
+    case "Placed":
+      return "bg-purple-100 text-yellow-800";
     case "Shipped":
       return "bg-purple-100 text-purple-800";
     case "Delivered":

@@ -85,7 +85,7 @@
                             <span
                                 class="{{#if (eq this.paymentStatus 'Paid')}}bg-green-100 text-green-800{{else}}bg-red-100 text-red-800{{/if}} px-2 py-1 rounded-full text-xs">
                                 {{this.paymentStatus}}
-                            </span> 
+                            </span>
                         </td> --}}
                         <td class="px-6 py-4">
                             <span class="{{getStatusColor this.status}} px-2 py-1 rounded-full text-xs">
@@ -122,22 +122,32 @@
                                     class="z-50 absolute right-0 mt-2 w-44 origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none rounded-lg divide-y divide-gray-100 dark:bg-gray-700 dark:divide-gray-600">
                                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                                         <li>
-                                            <a href="#" @click="updateOrderStatus('{{this._id}}', 'Processing')"
+                                            <a href="#"
+                                                @click.prevent="isOpen = false; updateOrderStatus('{{this._id}}', 'Processing')"
                                                 class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mark
                                                 as Processing</a>
                                         </li>
                                         <li>
-                                            <a href="#" @click="updateOrderStatus('{{this._id}}', 'Shipped')"
+                                            <a href="#"
+                                                @click.prevent="isOpen = false; updateOrderStatus('{{this._id}}', 'Placed')"
+                                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mark
+                                                as Placed</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"
+                                                @click.prevent="isOpen = false; updateOrderStatus('{{this._id}}', 'Shipped')"
                                                 class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mark
                                                 as Shipped</a>
                                         </li>
                                         <li>
-                                            <a href="#" @click="updateOrderStatus('{{this._id}}', 'Delivered')"
+                                            <a href="#"
+                                                @click.prevent="isOpen = false; updateOrderStatus('{{this._id}}', 'Delivered')"
                                                 class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mark
                                                 as Delivered</a>
                                         </li>
                                         <li>
-                                            <a href="#" @click="updateOrderStatus('{{this._id}}', 'Cancelled')"
+                                            <a href="#"
+                                                @click.prevent="isOpen = false; updateOrderStatus('{{this._id}}', 'Cancelled')"
                                                 class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-red-600">Cancel
                                                 Order</a>
                                         </li>
@@ -153,7 +163,7 @@
 </section>
 
 <script>
-    
+
 
 </script>
 

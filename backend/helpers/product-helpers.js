@@ -132,8 +132,15 @@ module.exports = {
           .getDb()
           .collection(essentials.PRODUCT_COLLECTION)
           .findOne({ _id: prod.item });
-        // console.log(product);
-        return { ...prod, details: product };
+        console.log(product);
+        product.Price = parseFloat(product.Price) || 0;
+        return {
+          ...prod,
+          productName: product.Name,
+          productPrice: product.Price,
+          productImage: product.ImagePath,
+          productCategory: product.Category,
+        };
       })
     );
 
@@ -144,5 +151,32 @@ module.exports = {
     console.log("Order Details:", order);
 
     return order;
+  },
+
+  // Function to get user cart
+  getUserCart: async (userId) => {
+    // console.log(userId);
+    const userCart = await dbModule
+      .getDb()
+      .collection(essentials.CART_COLLECTION)
+      .findOne({ user: userId });
+    // console.log("cart: ", userCart);
+
+    const products = await Promise.all(
+      userCart.products.map(async (prod) => {
+        const product = await dbModule
+          .getDb()
+          .collection(essentials.PRODUCT_COLLECTION)
+          .findOne({ _id: prod.item });
+        // console.log("pro ", product);
+        return {
+          ...prod,
+          product,
+        };
+      })
+    );
+
+    // console.log("usercart: ", userCart);
+    return products;
   },
 };

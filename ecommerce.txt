@@ -157,3 +157,5 @@ Multi-vendor support (if building a marketplace)
 ---
 
 Let me know your tech stack or target audience, and I can tailor these suggestions further or help you plan development modules.
+
+cd coding/projects/'full stack'/'e-commerce application'

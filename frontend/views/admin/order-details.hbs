@@ -66,22 +66,21 @@
             <div class="bg-white shadow rounded-lg overflow-hidden">
                 <h2 class="text-lg font-semibold text-gray-800 p-6 pb-0">Order Items ({{order.products.length}})</h2>
                 <div class="divide-y divide-gray-200">
-                    {{#each products}}
+                    {{#each order.products}}
                     <div class="p-6 flex flex-col sm:flex-row gap-4">
                         <div class="w-20 h-20 bg-gray-100 rounded-lg flex-shrink-0">
                             <!-- Product image would go here -->
-                            <img src="{{this.details.ImagePath}}" alt="{{this.details.Name}}"
+                            <img src="/{{this.productImage}}" alt="{{this.productName}}"
                                 class="w-full h-full object-cover rounded-lg">
                         </div>
                         <div class="flex-grow">
-                            <h3 class="font-medium">{{this.details.Name}}</h3>
+                            <h3 class="font-medium">{{this.productName}}</h3>
                             <p class="text-sm text-gray-500">SKU: {{this.item}}</p>
                         </div>
                         <div class="flex flex-col sm:items-end">
-                            <p class="font-medium">₹{{formatCurrency this.details.Price}}</p>
+                            <p class="font-medium">₹{{this.productPrice}}</p>
                             <p class="text-sm text-gray-500">Qty: {{this.quantity}}</p>
-                            <p class="text-sm font-medium mt-1">₹{{formatCurrency (multiply this.quantity
-                                this.details.price)}}</p>
+                            <p class="text-sm font-medium mt-1">₹{{multiply this.quantity this.productPrice}}</p>
                         </div>
                     </div>
                     {{/each}}
@@ -101,6 +100,7 @@
                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             onchange="updateOrderStatus('{{_id}}', this.value)">
                             <option value="pending" {{isSelected order.status 'pending' }}>Pending</option>
+                            <option value="placed" {{isSelected order.status 'placed' }}>Placed</option>
                             <option value="processing" {{isSelected order.status 'processing' }}>Processing</option>
                             <option value="shipped" {{isSelected order.status 'shipped' }}>Shipped</option>
                             <option value="delivered" {{isSelected order.status 'delivered' }}>Delivered</option>
@@ -150,8 +150,8 @@
     </div>
 </div>
 
-{{!--
-<script>
+
+{{!-- <script>
     function updateOrderStatus(orderId, status) {
         if (confirm(`Are you sure you want to update this order to ${status}?`)) {
             fetch('/admin/orders/update-status', {

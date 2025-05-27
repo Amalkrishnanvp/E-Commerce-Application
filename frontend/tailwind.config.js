@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./views/**/*.hbs"],
+  content: ["./views/**/*.hbs", "./node_modules/flowbite/**/*.js"],
   theme: {
     extend: {
       colors: {
@@ -14,5 +14,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/aspect-ratio")],
+  plugins: [require("@tailwindcss/aspect-ratio"), require("flowbite/plugin")],
 };
