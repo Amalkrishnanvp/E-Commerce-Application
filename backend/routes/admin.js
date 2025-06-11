@@ -48,6 +48,8 @@ router.get("/add-product", verifyAdmin, (req, res, next) => {
 /* POST add product details */
 router.post("/add-product", verifyAdmin, async (req, res, next) => {
   try {
+    const user = req.session.user;
+
     // Store product data
     const productData = req.body;
 
@@ -70,7 +72,10 @@ router.post("/add-product", verifyAdmin, async (req, res, next) => {
     // Move product image to public folder
     productImage.mv(imageLocation, (err) => {
       if (!err) {
-        res.render("admin/add-product");
+        res.render("admin/add-product", {
+          user,
+          layout: "layouts/adminLayout",
+        });
       } else {
         console.error(err);
         res.status(500).send("Failed to upload image");
@@ -93,7 +98,7 @@ router.get("/delete-product/:id", verifyAdmin, async (req, res, next) => {
   let productId = req.params.id;
   const response = await productHelpers.deleteProduct(productId);
 
-  res.redirect("/admin");
+  res.redirect("/admin/products");
 });
 
 /* GET edit product */
