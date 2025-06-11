@@ -8,14 +8,13 @@ A full-stack e-commerce web application built using Node.js, Express.js, MongoDB
 
 | Home Page | Product Page |
 |-----------|--------------|
-| ![Home](./screenshots/home.png) | ![Product](./screenshots/product.png) |
+| ![Home](./frontend/public/images/home.png) | ![Product](./frontend/public/images/product.png) |
 
 ---
 
 ## 🚀 Features
 
 - 🧾 Product listing by categories
-- 🔍 Product detail view
 - 🔐 User authentication & authorization
 - 🛒 Add to cart & manage cart items
 - 💳 Razorpay payment gateway (Online and COD)
