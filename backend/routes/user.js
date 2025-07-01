@@ -29,16 +29,30 @@ router.get("/", async (req, res, next) => {
   // Call function to get all products
   const products = await productHelpers.getAllProducts();
 
+  const electronics = products.filter((p) => p.Category === "Electronics");
+  const product = products.filter((p) => p.Category === "product");
+  const footwear = products.filter((p) => p.Category === "Footwear");
+  const selfCare = products.filter((p) => p.Category === "Self care");
+  const fashion = products.filter((p) => p.Category === "Fashion");
+
   if (user) {
     let userId = req.session.user._id;
     cartCount = await userHelpers.getCartCount(userId);
   }
 
-  res.render("user/home", { products, user, cartCount });
+  res.render("user/home", {
+    electronics,
+    product,
+    footwear,
+    selfCare,
+    fashion,
+    user,
+    cartCount,
+  });
 });
 
-router.get('/products', async (req, res, next) => {
-   // Access if session exists
+router.get("/products", async (req, res, next) => {
+  // Access if session exists
   let user = req.session.user;
   let cartCount = null;
 
@@ -51,7 +65,7 @@ router.get('/products', async (req, res, next) => {
   }
 
   res.render("user/view-products", { products, user, cartCount });
-})
+});
 
 /* GET - Render login page */
 router.get("/login", (req, res, next) => {
@@ -299,6 +313,41 @@ router.post("/verify-payment", verifyLogin, async (req, res) => {
   } else {
     res.status(400).json({ success: false });
   }
+});
+
+router.get("/search", async (req, res) => {
+  let user = req.session.user;
+  let userId;
+  let cartCount;
+
+  if (user) {
+    userId = req.session.user._id;
+    cartCount = await userHelpers.getCartCount(userId);
+  }
+
+  console.log("hi");
+  const query = req.query.q;
+  if (!query) return res.json([]);
+
+  const products = await userHelpers.getSearchProducts(query);
+  console.log(products);
+
+  const electronics = products.filter((p) => p.Category === "Electronics");
+  const product = products.filter((p) => p.Category === "product");
+  const footwear = products.filter((p) => p.Category === "Footwear");
+  const selfCare = products.filter((p) => p.Category === "Self care");
+  const fashion = products.filter((p) => p.Category === "Fashion");
+
+  res.render("user/view-products", {
+    electronics,
+    product,
+    footwear,
+    selfCare,
+    fashion,
+    user,
+    cartCount,
+    searchQuery: query,
+  });
 });
 
 module.exports = router;

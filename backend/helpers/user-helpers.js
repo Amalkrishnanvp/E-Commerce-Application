@@ -512,4 +512,50 @@ module.exports = {
 
     return response;
   },
+
+  // function to get search products
+  getSearchProducts: async (query) => {
+    try {
+      console.log("heyy");
+      const db = dbModule.getDb();
+      const collection = db.collection(essentials.PRODUCT_COLLECTION);
+
+      const results = await collection
+        .find({
+          $and: [
+            {
+              $or: [
+                { Name: { $regex: `^${query}`, $options: "i" } },
+                { Category: { $regex: `^${query}`, $options: "i" } },
+              ],
+            },
+            // {
+            //   $or: [
+            //     { Name: { $regex: /^[A-Za-z\s]+$/ } },
+            //     { Category: { $regex: /^[A-Za-z\s]+$/ } },
+            //   ],
+            // },
+          ],
+        })
+        .toArray();
+
+      console.log(results);
+      return results;
+    } catch (error) {
+      console.error("Error during product search:", error);
+      throw error;
+    }
+  },
+
+  setupIndexes: async () => {
+    const db = dbModule.getDb();
+    const collection = db.collection(essentials.PRODUCT_COLLECTION);
+
+    await collection.createIndex({
+      Name: "text",
+      Category: "text",
+    });
+
+    console.log("Text index ensured.");
+  },
 };

@@ -18,10 +18,12 @@
     <div class="bg-white">
         <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:max-w-7xl lg:px-8">
 
+            {{#if product.length}}
+
             <h2 class="font-semibold pb-4 text-2xl">Top</h2>
 
             <div class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-4">
-                {{#each products}}
+                {{#each product}}
                 {{#ifEquals this.Category "product"}}
                 <div>
                     <div
@@ -61,18 +63,18 @@
             </div>
 
 
-
+            {{/if}}
         </div>
     </div>
 
     {{!-- Row 2 --}}
     <div class="bg-white">
         <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:max-w-7xl lg:px-8">
-
+            {{#if electronics.length}}
             <h2 class="font-semibold pb-4 text-2xl">Electronics</h2>
 
             <div class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-4">
-                {{#each products}}
+                {{#each electronics}}
                 {{#ifEquals this.Category "Electronics"}}
                 <div>
                     <div
@@ -111,7 +113,7 @@
                 <!-- More products... -->
             </div>
 
-
+            {{/if}}
 
         </div>
     </div>
@@ -119,11 +121,11 @@
     {{!-- Row 3 --}}
     <div class="bg-white">
         <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:max-w-7xl lg:px-8">
-
+            {{#if footwear.length}}
             <h2 class="font-semibold pb-4 text-2xl">Footwears</h2>
 
             <div class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-4">
-                {{#each products}}
+                {{#each footwear}}
                 {{#ifEquals this.Category "Footwear"}}
                 <div>
                     <div
@@ -162,7 +164,7 @@
                 <!-- More products... -->
             </div>
 
-
+            {{/if}}
 
         </div>
     </div>
@@ -170,11 +172,11 @@
     {{!-- Row 4 --}}
     <div class="bg-white">
         <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:max-w-7xl lg:px-8">
-
+            {{#if selfCare.length}}
             <h2 class="font-semibold pb-4 text-2xl">Self Care</h2>
 
             <div class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-4">
-                {{#each products}}
+                {{#each selfCare}}
                 {{#ifEquals this.Category "Self care"}}
                 <div>
                     <div
@@ -213,7 +215,7 @@
                 <!-- More products... -->
             </div>
 
-
+            {{/if}}
 
         </div>
     </div>
@@ -221,11 +223,11 @@
     {{!-- Row 5 --}}
     <div class="bg-white">
         <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:max-w-7xl lg:px-8">
-
+            {{#if fashion.length}}
             <h2 class="font-semibold pb-4 text-2xl">Fashion</h2>
 
             <div class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-4">
-                {{#each products}}
+                {{#each fashion}}
                 {{#ifEquals this.Category "Fashion"}}
                 <div>
                     <div
@@ -265,7 +267,7 @@
             </div>
 
 
-
+            {{/if}}
         </div>
     </div>
 

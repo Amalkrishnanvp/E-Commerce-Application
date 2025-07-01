@@ -106,6 +106,7 @@ app.set("view options", { layout: "../views/layouts/layout" });
 // Import routes
 const userRouter = require("./routes/user");
 const adminRouter = require("./routes/admin");
+const userHelpers = require("./helpers/user-helpers");
 
 // Serve static files from 'public' folder
 app.use(express.static("../frontend/public"));
@@ -149,6 +150,8 @@ const startServer = async () => {
     app.listen(port, () => {
       console.log(`Server started running on port: ${port}`);
     });
+
+    // userHelpers.setupIndexes();
   } catch (error) {
     console.error("Failed to connect to DB, exiting...", error);
     process.exit(1);
